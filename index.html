@@ -57,17 +57,17 @@
 
         .navigation {
             position: fixed;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 20px;
+            right: 20px;
             display: flex;
             gap: 6px;
-            z-index: 1000;
-            background: rgba(22, 27, 34, 0.9);
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid #30363d;
-            backdrop-filter: blur(10px);
+            z-index: 10000;
+            background: rgba(13, 17, 23, 0.3);
+            padding: 8px 16px;
+            border-radius: 25px;
+            border: 2px solid #30363d;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
         .nav-button {
@@ -103,6 +103,41 @@
             font-size: 12px;
             font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
+        }
+
+        /* Responsive navigation adjustments */
+        @media (max-width: 768px) {
+            .navigation {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+                gap: 4px;
+            }
+            .nav-button {
+                padding: 3px 8px;
+                font-size: 11px;
+            }
+            .slide-counter {
+                padding: 3px 8px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navigation {
+                top: 5px;
+                right: 5px;
+                padding: 4px 8px;
+                gap: 3px;
+            }
+            .nav-button {
+                padding: 2px 6px;
+                font-size: 10px;
+            }
+            .slide-counter {
+                padding: 2px 6px;
+                font-size: 10px;
+            }
         }
 
 
@@ -169,12 +204,8 @@
                         path: '1/PX4 Architecture at a Glance.html'
                     },
                     {
-                        title: 'RTOS: NuttX Integration & Real-Time',
-                        path: '2/RTOS_ NuttX Integration & Real-Time.html'
-                    },
-                    {
-                        title: 'Runtime Models: Tasks vs Work Queues',
-                        path: '3/Runtime Models_ Tasks vs Work Queues.html'
+                        title: 'PX4 Repository Organization for Developers',
+                        path: '18/PX4 Repository Organization for Developers.html'
                     },
                     {
                         title: 'uORB Middleware: What and Why',
@@ -201,12 +232,28 @@
                         path: '9/Flight Stack Overview.html'
                     },
                     {
+                        title: 'VTOL Flight Controller',
+                        path: '20/VTOL Flight Controller.html'
+                    },
+                    {
                         title: 'Middleware Components',
                         path: '10/Middleware Components.html'
                     },
                     {
+                        title: 'RTOS: NuttX Integration & Real-Time',
+                        path: '2/RTOS_ NuttX Integration & Real-Time.html'
+                    },
+                    {
+                        title: 'Runtime Models: Tasks vs Work Queues',
+                        path: '3/Runtime Models_ Tasks vs Work Queues.html'
+                    },
+                    {
                         title: 'Tasks vs Work Queue Items: Comparison',
                         path: '11/Tasks vs Work Queue Items_ Comparison.html'
+                    },
+                    {
+                        title: 'Pixhawk 6X VTOL HITL System Status',
+                        path: '19/Pixhawk 6X VTOL HITL System Status.html'
                     },
                     {
                         title: 'Create a Task-Based Module',
@@ -219,6 +266,10 @@
                     {
                         title: 'Scheduling Methods for Work Queues',
                         path: '14/Scheduling Methods for Work Queues.html'
+                    },
+                    {
+                        title: 'PX4 Board Support & Module Configuration',
+                        path: '17/PX4 Board Support & Module Configuration.html'
                     },
                     {
                         title: 'Best Practices: Choosing and Implementing',

@@ -65,10 +65,28 @@
     border: 2px solid #0f7fff !important;
   }
 
+  /* Fix interactive elements for responsive design */
+  * {
+    pointer-events: auto;
+  }
+  
+  [data-slide-selected],
+  [item-slide-click-selected],
+  [item-slide-selected] {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Ensure click areas work properly with responsive sizing */
+  .flex-1 {
+    min-height: 0;
+    flex-shrink: 1;
+  }
+
 
 </style></head>
 <body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
-<div class="w-[1280px] h-[720px] relative flex flex-col bg-[#0d1117] overflow-hidden">
+<div class="w-screen h-screen relative flex flex-col bg-[#0d1117] overflow-hidden">
 <!-- Top Navigation -->
 <div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
 <div class="flex items-center gap-3">

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PX4 Board Support & Module Configuration</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for code blocks if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d; 
+            border-radius: 4px;
+        }
+
+        /* Fix interactive elements for responsive design */
+        * {
+            pointer-events: auto;
+        }
+        
+        [data-slide-selected],
+        [item-slide-click-selected],
+        [item-slide-selected] {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ensure click areas work properly with responsive sizing */
+        .flex-1 {
+            min-height: 0;
+            flex-shrink: 1;
+        }
+    </style>
+</head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-screen h-screen relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / board-support</span>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex px-12 py-8 gap-8">
+<!-- Left Column: Board Support -->
+<div class="flex-1 flex flex-col">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded bg-[#238636]/20 flex items-center justify-center text-[#238636] border border-[#238636]/50">
+<i class="fa-solid fa-microchip"></i>
+</div>
+<h2 class="text-2xl font-bold text-white">PX4 Board Support & Module Configuration</h2>
+</div>
+
+<!-- Supported Boards Section -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-6 mb-6 shadow-xl">
+<h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+<i class="fa-solid fa-circuit-board text-[#2f81f7]"></i> Supported Hardware Platforms
+</h3>
+<div class="grid grid-cols-2 gap-4">
+<!-- Flight Controllers -->
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
+<h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
+<i class="fa-solid fa-plane text-[#238636]"></i> Flight Controllers
+</h4>
+<div class="space-y-2 text-xs">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#238636]"></div>
+<span class="text-[#c9d1d9]">Pixhawk 4/5/6 Series</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#238636]"></div>
+<span class="text-[#c9d1d9]">FMUv2/v3/v4/v5/v6</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#238636]"></div>
+<span class="text-[#c9d1d9]">Cube Orange/Purple</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#238636]"></div>
+<span class="text-[#c9d1d9]">mRo Control Zero</span>
+</div>
+</div>
+</div>
+
+<!-- Companion Computers -->
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
+<h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
+<i class="fa-solid fa-computer text-[#d29922]"></i> Companion Computers
+</h4>
+<div class="space-y-2 text-xs">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#d29922]"></div>
+<span class="text-[#c9d1d9]">Raspberry Pi 4/5</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#d29922]"></div>
+<span class="text-[#c9d1d9]">NVIDIA Jetson Series</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#d29922]"></div>
+<span class="text-[#c9d1d9]">Intel NUC</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#d29922]"></div>
+<span class="text-[#c9d1d9]">Custom Linux Boards</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Module Configuration Section -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-6 shadow-xl flex-1">
+<h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+<i class="fa-solid fa-sliders text-[#a371f7]"></i> Board-Specific Module Configuration
+</h3>
+<div class="space-y-4">
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
+<h4 class="text-white font-bold text-sm mb-2">Configuration Methods</h4>
+<div class="space-y-2 text-xs text-[#8b949e]">
+<div class="flex items-center gap-2">
+<code class="bg-[#30363d] px-2 py-1 rounded text-[#c9d1d9] text-[10px]">make menuconfig</code>
+<span>Interactive configuration interface</span>
+</div>
+<div class="flex items-center gap-2">
+<code class="bg-[#30363d] px-2 py-1 rounded text-[#c9d1d9] text-[10px]">boards/*/default.px4board</code>
+<span>Board-specific defaults</span>
+</div>
+<div class="flex items-center gap-2">
+<code class="bg-[#30363d] px-2 py-1 rounded text-[#c9d1d9] text-[10px]">ROMFS/px4fmu_common/init.d</code>
+<span>Runtime startup scripts</span>
+</div>
+</div>
+</div>
+
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-4">
+<h4 class="text-white font-bold text-sm mb-2">Module Selection Criteria</h4>
+<div class="grid grid-cols-2 gap-3 text-xs">
+<div class="space-y-1">
+<div class="text-[#2f81f7] font-bold">Resource Constraints</div>
+<div class="text-[#8b949e]">• Flash memory limits</div>
+<div class="text-[#8b949e]">• RAM availability</div>
+<div class="text-[#8b949e]">• CPU performance</div>
+</div>
+<div class="space-y-1">
+<div class="text-[#238636] font-bold">Hardware Features</div>
+<div class="text-[#8b949e]">• Available sensors</div>
+<div class="text-[#8b949e]">• Communication interfaces</div>
+<div class="text-[#8b949e]">• Vehicle type support</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Right Column: Configuration Interface -->
+<div class="w-[500px] flex flex-col">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded bg-[#d29922]/20 flex items-center justify-center text-[#d29922] border border-[#d29922]/50">
+<i class="fa-solid fa-gear"></i>
+</div>
+<h2 class="text-xl font-bold text-white">Module Configuration Interface</h2>
+</div>
+
+<!-- Screenshot Placeholder -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-6 flex-1 flex flex-col">
+<h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+<i class="fa-solid fa-image text-[#8b949e]"></i> Configuration Screenshot
+</h3>
+<div class="flex-1 bg-[#0d1117] border-2 border-dashed border-[#30363d] rounded-lg flex flex-col items-center justify-center p-8">
+<i class="fa-solid fa-camera text-6xl text-[#30363d] mb-4"></i>
+<div class="text-center text-[#8b949e]">
+<p class="text-lg font-bold mb-2">Module Enable/Disable Interface</p>
+<p class="text-sm">Screenshot placeholder for:</p>
+<p class="text-xs mt-2 font-mono bg-[#30363d] px-2 py-1 rounded">make menuconfig</p>
+<p class="text-xs mt-1">or QGroundControl module configuration</p>
+</div>
+</div>
+</div>
+
+<!-- Key Points -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4 mt-4">
+<h4 class="text-white font-bold text-sm mb-3">Configuration Best Practices</h4>
+<div class="space-y-2 text-xs text-[#8b949e]">
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-check text-[#238636] mt-0.5 text-[10px]"></i>
+<span>Enable only required modules for your vehicle type</span>
+</div>
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-check text-[#238636] mt-0.5 text-[10px]"></i>
+<span>Consider flash/RAM constraints of target board</span>
+</div>
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-check text-[#238636] mt-0.5 text-[10px]"></i>
+<span>Test configuration thoroughly before deployment</span>
+</div>
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-check text-[#238636] mt-0.5 text-[10px]"></i>
+<span>Use board-specific defaults as starting point</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Footer Info -->
+<div class="h-12 bg-[#161b22] border-t border-[#30363d] flex items-center px-8 justify-between">
+<div class="flex items-center gap-2 text-xs text-[#8b949e]">
+<i class="fa-solid fa-info-circle text-[#2f81f7]"></i>
+<span>Module configuration affects build size, runtime performance, and available features</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono text-[#8b949e]">
+<span>Optimize for your specific hardware platform</span>
+</div>
+</div>
+</div>
+</body>
+</html>

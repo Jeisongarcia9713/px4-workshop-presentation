@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>PX4 Repository Organization for Developers</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for code blocks */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d; 
+            border-radius: 4px;
+        }
+
+        /* Fix interactive elements for responsive design */
+        * {
+            pointer-events: auto;
+        }
+        
+        [data-slide-selected],
+        [item-slide-click-selected],
+        [item-slide-selected] {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ensure click areas work properly with responsive sizing */
+        .flex-1 {
+            min-height: 0;
+            flex-shrink: 1;
+        }
+    </style>
+</head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-screen h-screen relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / repository-structure</span>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex px-8 py-8 gap-6">
+<!-- Left Column: Directory Structure -->
+<div class="w-[400px] flex flex-col">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded bg-[#2f81f7]/20 flex items-center justify-center text-[#2f81f7] border border-[#2f81f7]/50">
+<i class="fa-solid fa-folder-tree"></i>
+</div>
+<h2 class="text-2xl font-bold text-white">PX4 Repository Organization</h2>
+</div>
+
+<!-- Directory Tree -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-6 shadow-xl flex-1 overflow-auto">
+<h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+<i class="fa-solid fa-code-branch text-[#238636]"></i> Key Directory Structure
+</h3>
+<div class="font-mono text-sm space-y-1">
+<div class="text-[#c9d1d9]">📁 <span class="text-[#2f81f7] font-bold">PX4-Autopilot/</span></div>
+<div class="ml-4 space-y-1">
+<div class="flex items-center gap-2">
+<span class="text-[#8b949e]">├── 📁</span>
+<span class="text-[#238636] font-bold">src/</span>
+<span class="text-[#8b949e] text-xs">- Source code</span>
+</div>
+<div class="ml-8 space-y-1 text-xs">
+<div class="text-[#8b949e]">├── modules/ - Flight stack modules</div>
+<div class="text-[#8b949e]">├── drivers/ - Hardware drivers</div>
+<div class="text-[#8b949e]">├── lib/ - Shared libraries</div>
+<div class="text-[#8b949e]">├── systemcmds/ - System commands</div>
+<div class="text-[#8b949e]">└── examples/ - Example modules</div>
+</div>
+
+<div class="flex items-center gap-2 mt-2">
+<span class="text-[#8b949e]">├── 📁</span>
+<span class="text-[#d29922] font-bold">msg/</span>
+<span class="text-[#8b949e] text-xs">- uORB message definitions</span>
+</div>
+
+<div class="flex items-center gap-2">
+<span class="text-[#8b949e]">├── 📁</span>
+<span class="text-[#a371f7] font-bold">boards/</span>
+<span class="text-[#8b949e] text-xs">- Board-specific configs</span>
+</div>
+<div class="ml-8 space-y-1 text-xs">
+<div class="text-[#8b949e]">├── px4/ - PX4 board definitions</div>
+<div class="text-[#8b949e]">├── nxp/ - NXP boards</div>
+<div class="text-[#8b949e]">└── intel/ - Intel boards</div>
+</div>
+
+<div class="flex items-center gap-2 mt-2">
+<span class="text-[#8b949e]">├── 📁</span>
+<span class="text-[#da3633] font-bold">ROMFS/</span>
+<span class="text-[#8b949e] text-xs">- Runtime filesystem</span>
+</div>
+<div class="ml-8 space-y-1 text-xs">
+<div class="text-[#8b949e]">└── px4fmu_common/init.d/ - Startup scripts</div>
+</div>
+
+<div class="flex items-center gap-2 mt-2">
+<span class="text-[#8b949e]">├── 📁</span>
+<span class="text-[#2f81f7] font-bold">platforms/</span>
+<span class="text-[#8b949e] text-xs">- Platform abstractions</span>
+</div>
+
+<div class="flex items-center gap-2">
+<span class="text-[#8b949e]">├── 📁</span>
+<span class="text-[#238636] font-bold">Tools/</span>
+<span class="text-[#8b949e] text-xs">- Development tools</span>
+</div>
+
+<div class="flex items-center gap-2">
+<span class="text-[#8b949e]">└── 📄</span>
+<span class="text-[#c9d1d9]">CMakeLists.txt</span>
+<span class="text-[#8b949e] text-xs">- Build configuration</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Middle Column: Development Areas -->
+<div class="flex-1 flex flex-col">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded bg-[#238636]/20 flex items-center justify-center text-[#238636] border border-[#238636]/50">
+<i class="fa-solid fa-code"></i>
+</div>
+<h2 class="text-xl font-bold text-white">Key Development Areas</h2>
+</div>
+
+<!-- Key Directories for Development -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-6 shadow-xl flex-1 overflow-hidden">
+<h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+<i class="fa-solid fa-hammer text-[#d29922]"></i> Key Development Areas
+</h3>
+<div class="space-y-3 overflow-auto max-h-[400px]">
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-3">
+<h4 class="text-[#2f81f7] font-bold text-sm mb-2 flex items-center gap-2">
+<i class="fa-solid fa-cube"></i> src/modules/
+</h4>
+<p class="text-xs text-[#8b949e]">Flight control modules, estimators, controllers. Where most application logic lives.</p>
+</div>
+
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-3">
+<h4 class="text-[#238636] font-bold text-sm mb-2 flex items-center gap-2">
+<i class="fa-solid fa-microchip"></i> src/drivers/
+</h4>
+<p class="text-xs text-[#8b949e]">Hardware abstraction layer for sensors, actuators, and communication interfaces.</p>
+
+
+
+</div>
+
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-3">
+<h4 class="text-[#d29922] font-bold text-sm mb-2 flex items-center gap-2">
+<i class="fa-solid fa-envelope"></i> msg/
+</h4>
+<p class="text-xs text-[#8b949e]">uORB message definitions for inter-module communication.</p>
+
+
+
+</div>
+
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-3">
+<h4 class="text-[#a371f7] font-bold text-sm mb-2 flex items-center gap-2">
+<i class="fa-solid fa-book"></i> src/lib/
+</h4>
+<p class="text-xs text-[#8b949e]">Shared libraries and utilities used across multiple modules.</p>
+
+
+
+</div>
+
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-3">
+<h4 class="text-[#da3633] font-bold text-sm mb-2 flex items-center gap-2">
+<i class="fa-solid fa-terminal"></i> src/systemcmds/
+</h4>
+<p class="text-xs text-[#8b949e]">System commands and utilities for debugging and configuration.</p>
+
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- Footer Info -->
+<div class="h-12 bg-[#161b22] border-t border-[#30363d] flex items-center px-8 justify-between">
+<div class="flex items-center gap-2 text-xs text-[#8b949e]">
+<i class="fa-solid fa-info-circle text-[#2f81f7]"></i>
+<span>Understanding the repository structure is essential for efficient PX4 development</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono text-[#8b949e]">
+<span>Start with src/examples/ for learning</span>
+</div>
+</div>
+</div>
+</body>
+</html>

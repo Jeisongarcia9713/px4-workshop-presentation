@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pixhawk 6X VTOL HITL System Status</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for code blocks */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d; 
+            border-radius: 4px;
+        }
+
+        /* Fix interactive elements for responsive design */
+        * {
+            pointer-events: auto;
+        }
+        
+        [data-slide-selected],
+        [item-slide-click-selected],
+        [item-slide-selected] {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ensure click areas work properly with responsive sizing */
+        .flex-1 {
+            min-height: 0;
+            flex-shrink: 1;
+        }
+    </style>
+</head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-screen h-screen relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / system-status</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#238636]/20 border border-[#238636]/60">
+<div class="w-2 h-2 rounded-full bg-[#238636]"></div>
+<span class="text-xs font-mono text-[#238636]">HITL Active</span>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col px-8 py-8">
+<!-- Header Section -->
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 rounded bg-[#2f81f7]/20 flex items-center justify-center text-[#2f81f7] border border-[#2f81f7]/50">
+<i class="fa-solid fa-chart-line"></i>
+</div>
+<div>
+<h2 class="text-3xl font-bold text-white">Runtime Examples: Tasks vs Work Queue Modules</h2>
+<p class="text-[#8b949e] text-sm">Real system output showing module execution patterns on Pixhawk 6X VTOL HITL</p>
+</div>
+</div>
+
+<!-- Two Column Layout for Screenshots -->
+<div class="flex gap-8 flex-1">
+<!-- Left Column: top command output -->
+<div class="flex-1 flex flex-col">
+
+<!-- Screenshot Frame for top command -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-6 flex-1 flex flex-col shadow-xl">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-white font-bold flex items-center gap-2">
+<i class="fa-solid fa-terminal text-[#238636]"></i>
+<code class="bg-[#30363d] px-2 py-1 rounded text-sm">nsh> top</code>
+</h4>
+<div class="text-xs text-[#8b949e] font-mono">Modules running as dedicated tasks</div>
+</div>
+
+<!-- Command Output -->
+<div class="flex-1 bg-[#0d1117] border border-[#30363d] rounded-lg p-4 overflow-auto">
+<pre class="text-[#c9d1d9] font-mono text-xs leading-tight whitespace-pre">
+nsh> top
+
+PID COMMAND                CPU(ms) CPU(%) USED/STACK PRIO(BASE) STATE FD
+  0 Idle Task               268859  70.632    272/  768   0 (  0) READY  3
+  1 hpwork                       0   0.000    292/ 1224 249 (249) w:sem  3
+  2 lpwork                       0   0.000    292/ 1576  50 ( 50) w:sem  3
+  3 nsh main                     0   0.000   2292/ 3144 100 (100) w:sem  4
+  4 wq:manager                   0   0.000    476/ 1232 255 (255) w:sem  4
+  5 wq:lp_default                0   0.029   1436/ 1896 205 (205) w:sem  4
+  6 PX4 telnet daemon            0   0.000    652/ 1984 100 (100) w:sem  1
+  7 netinit                      0   0.004    588/ 2024  49 ( 49) w:sem  4
+2645 mavlink shell              0   0.000   1012/ 2000 100 (100) w:sem  4
+  58 wq:hp_default               1   0.138    864/ 2776 237 (237) w:sem  4
+ 367 dataman                     2   0.153   1100/ 1376  90 ( 90) w:sem  5
+ 429 wq:tty55                    3   0.243   1108/ 1704 229 (229) w:sem  4
+ 457 wq:rate_ctrl               50   3.822   2548/ 3120 255 (255) w:sem  4
+ 460 wq:nav_and_controllers     47   3.575   1436/ 2216 242 (242) w:sem  4
+ 472 commander                   6   0.452   1524/ 3184 140 (140) w:slg  5
+2591 log_writer_file             4   0.331    644/ 1144  60 ( 60) w:sem  4
+2448 mavlink_if0                12   0.978   1924/ 3048 100 (100) w:slg  5
+2449 mavlink_rcv_if0             1   0.137   2312/ 6144 175 (175) w:sem  5
+2489 mavlink_if1                37   2.795   1868/ 3048 100 (100) w:slg  5
+2491 mavlink_rcv_if1             1   0.122   2428/ 6144 175 (175) w:sem  5
+2504 navigator                   1   0.131   1828/ 2104 105 (105) w:sem 11
+2547 mavlink_if2                 3   0.244   1276/ 3104 100 (100) w:slg  5
+2548 mavlink_rcv_if2             2   0.198   2500/ 6144 175 (175) w:sem  5
+2550 wq:state_sharing            0   0.055   1316/ 2216 215 (215) w:sem  4
+2556 mavlink_if3                23   1.800   1956/ 3128 100 (100) w:slg  5
+2557 mavlink_rcv_if3             1   0.136   2516/ 6144 175 (175) w:sem  5
+2583 logger                     18   1.397   3060/ 3616 230 (230) w:sem  4
+2642 mavlink_if50               16   3.489   3660/ 5976 241 (241) w:sem  4
+2634 mavlink_if4                73   5.510   1996/ 3136 100 (100) READY  7
+2635 mavlink_rcv_if4            28   2.171   2620/ 6144 175 (175) w:sem  7
+2654 netinit                     0   0.000    588/ 2024  49 ( 49) w:sem  4
+2766 top                         7   0.707   2036/ 4056 237 (237) RUN    3
+
+Processes: 32 total, 3 running, 29 sleeping
+CPU usage: 28.63% tasks, 0.74% sched, 70.63% idle
+DMA Memory: 5120 total, 1536 used 1536 peak
+Uptime: 364.343s total, 268.860s idle
+</pre>
+</div>
+
+</div>
+</div>
+
+<!-- Right Column: work_queue status output -->
+<div class="flex-1 flex flex-col">
+
+<!-- Screenshot Frame for work_queue status -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-6 flex-1 flex flex-col shadow-xl">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-white font-bold flex items-center gap-2">
+<i class="fa-solid fa-terminal text-[#d29922]"></i>
+<code class="bg-[#30363d] px-2 py-1 rounded text-sm">nsh> work_queue status</code>
+</h4>
+<div class="text-xs text-[#8b949e] font-mono">Modules running in work queues</div>
+</div>
+
+<!-- Command Output -->
+<div class="flex-1 bg-[#0d1117] border border-[#30363d] rounded-lg p-4 overflow-auto">
+<pre class="text-[#c9d1d9] font-mono text-xs leading-tight whitespace-pre">
+nsh> work_queue status
+
+Work Queue: 7 threads                           RATE        INTERVAL
+|__ 1) wq:rate_ctrl                           330.0 Hz        3030 us
+|    |__ 1) control_allocator                 330.0 Hz        3030 us
+|    |__ 2) mc_rate_control                   239.7 Hz        4172 us
+|    |__ 3) pwm_out_sim                       328.4 Hz        3045 us
+|    |__ 4) vehicle_angular_velocity          232.2 Hz        4306 us
+|    \__ 5) vtol_att_control                  723.2 Hz        1383 us
+|__ 2) wq:nav_and_controllers                                         
+|    |__ 1) airspeed_selector                  10.0 Hz       99955 us (100000 us)
+|    |__ 2) ekf2_selector                     341.9 Hz        2925 us
+|    |__ 3) flight_mode_manager                48.2 Hz       20760 us
+|    |__ 4) fw_att_control                    241.3 Hz        4144 us
+|    |__ 5) fw_pos_control                     48.2 Hz       20761 us
+|    |__ 6) fw_rate_control                   241.8 Hz        4136 us
+|    |__ 7) land_detector                      93.0 Hz       10755 us
+|    |__ 8) mc_att_control                    239.4 Hz        4177 us
+|    |__ 9) mc_hover_thrust_estimator          98.8 Hz       10118 us
+|    |__ 10) mc_pos_control                    91.7 Hz       10900 us
+|    |__ 11) sensors                          231.8 Hz        4313 us
+|    |__ 12) vehicle_acceleration             244.1 Hz        4097 us
+|    |__ 13) vehicle_air_data                 112.2 Hz        8909 us
+|    |__ 14) vehicle_gps_position               4.8 Hz      210509 us
+|    \__ 15) vehicle_magnetometer             112.2 Hz        8910 us
+|__ 3) wq:INS0                                                       
+|    |__ 1) ekf2                             239.6 Hz        4174 us
+|    \__ 2) vehicle_imu                       242.4 Hz        4126 us
+|__ 4) wq:hp_default                                                 
+|    |__ 1) fw_autotune_attitude_control      240.6 Hz        4156 us
+|    |__ 2) manual_control                      5.0 Hz      199892 us
+|    |__ 3) mc_autotune_attitude_control        0.0 Hz    43474436 us
+|    |__ 4) rc_update                           0.0 Hz           0 us
+|    |__ 5) safety_button                      30.3 Hz       32998 us (33000 us)
+|    \__ 6) tone_alarm                          0.1 Hz     9170812 us
+|__ 5) wq:tty55                                                      
+|    \__ 1) px4io                              48.2 Hz       20737 us
+|__ 6) wq:state_sharing                                              
+|    |__ 1) publisher_state_sharing             0.0 Hz           0 us
+|    \__ 2) state_sharing                      98.8 Hz       10118 us
+\__ 7) wq:lp_default                                                 
+     |__ 1) cdcacm_autostart                    2.0 Hz      499076 us
+     |__ 2) gyro_calibration                   21.4 Hz       46759 us (10000000 us)
+     |__ 3) load_mon                            2.0 Hz      499440 us (500000 us)
+     |__ 4) mag_bias_estimator                 21.9 Hz       45604 us (1000000 us)
+     |__ 5) parameters                           0.0 Hz    40133224 us
+     \__ 6) send_event                          30.0 Hz       33362 us (33333 us)
+</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- Footer Info -->
+<div class="h-12 bg-[#161b22] border-t border-[#30363d] flex items-center px-8 justify-between">
+<div class="flex items-center gap-2 text-xs text-[#8b949e]">
+<i class="fa-solid fa-info-circle text-[#2f81f7]"></i>
+<span>Compare task vs work queue execution patterns to understand design trade-offs</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono text-[#8b949e]">
+<span>Pixhawk 6X | Standard VTOL | HITL Mode</span>
+</div>
+</div>
+</div>
+</body>
+</html>

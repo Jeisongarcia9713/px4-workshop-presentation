@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>VTOL Flight Controller</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for code blocks */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d1117; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d; 
+            border-radius: 4px;
+        }
+
+        /* Fix interactive elements for responsive design */
+        * {
+            pointer-events: auto;
+        }
+        
+        [data-slide-selected],
+        [item-slide-click-selected],
+        [item-slide-selected] {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ensure click areas work properly with responsive sizing */
+        .flex-1 {
+            min-height: 0;
+            flex-shrink: 1;
+        }
+    </style>
+</head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-screen h-screen relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / vtol-controller</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#a371f7]/20 border border-[#a371f7]/60">
+<div class="w-2 h-2 rounded-full bg-[#a371f7]"></div>
+<span class="text-xs font-mono text-[#a371f7]">VTOL Mode</span>
+</div>
+</div>
+</div>
+
+<!-- Main Content -->
+<div class="flex-1 flex flex-col px-8 py-8">
+<!-- Header Section -->
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 rounded bg-[#a371f7]/20 flex items-center justify-center text-[#a371f7] border border-[#a371f7]/50">
+<i class="fa-solid fa-plane"></i>
+</div>
+<div>
+<h2 class="text-3xl font-bold text-white">VTOL Flight Controller</h2>
+<p class="text-[#8b949e] text-sm">Vertical Take-Off and Landing Aircraft Control Architecture</p>
+</div>
+</div>
+
+<!-- Two Column Layout -->
+<div class="flex gap-6 flex-1">
+<!-- Left Column: Controller Diagram -->
+<div class="w-[60%] flex flex-col">
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-6 flex-1 flex flex-col shadow-xl">
+<h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+<i class="fa-solid fa-sitemap text-[#a371f7]"></i> VTOL Controller Architecture
+</h3>
+
+<!-- Controller Diagram -->
+<div class="flex-1 bg-[#0d1117] border border-[#30363d] rounded-lg p-4 flex items-center justify-center">
+<img src="https://docs.px4.io/main/assets/VTOL_controller_diagram.Wg1qpHqf.png" 
+     alt="VTOL Controller Diagram" 
+     class="max-w-full max-h-full object-contain">
+</div>
+</div>
+</div>
+
+<!-- Right Column: Key Features and Modes -->
+<div class="flex-1 flex flex-col gap-3">
+<!-- VTOL Attitude Controller -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4 shadow-xl">
+<h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+<i class="fa-solid fa-brain text-[#238636]"></i> VTOL Attitude Controller
+</h3>
+<div class="space-y-2 text-xs">
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-circle text-[#238636] mt-1 text-[6px]"></i>
+<div>
+<span class="text-white font-bold text-xs">Switching & Blending Logic:</span>
+<div class="text-[#8b949e] mt-0.5 text-[10px]">Facilitates mode transitions and control blending between MC and FW controllers</div>
+</div>
+</div>
+
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-circle text-[#2f81f7] mt-1 text-[6px]"></i>
+<div>
+<span class="text-white font-bold text-xs">Virtual Inputs:</span>
+<div class="text-[#8b949e] mt-0.5 text-[10px]">Some inputs ignored depending on current VTOL mode</div>
+</div>
+</div>
+
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-circle text-[#d29922] mt-1 text-[6px]"></i>
+<div>
+<span class="text-white font-bold text-xs">Type-Specific Actions:</span>
+<div class="text-[#8b949e] mt-0.5 text-[10px]">Handles pusher motor ramp-up, tilt mechanisms during transitions</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Transition Behavior by VTOL Type -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-3 shadow-xl">
+<h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+<i class="fa-solid fa-exchange-alt text-[#d29922]"></i> Transition Behavior
+</h3>
+<div class="space-y-1.5 text-xs overflow-auto max-h-[180px]">
+<div class="bg-[#0d1117] border border-[#30363d] rounded p-2">
+<div class="flex items-center gap-2 mb-1">
+<i class="fa-solid fa-helicopter text-[#238636] text-[8px]"></i>
+<span class="text-white font-bold text-[10px]">Standard & Tiltrotor VTOL</span>
+</div>
+<div class="text-[#8b949e] text-[9px]">FW attitude controller produces rate setpoints → separate rate controllers → torque commands for MC and FW actuators</div>
+</div>
+
+<div class="bg-[#0d1117] border border-[#30363d] rounded p-2">
+<div class="flex items-center gap-2 mb-1">
+<i class="fa-solid fa-plane text-[#2f81f7] text-[8px]"></i>
+<span class="text-white font-bold text-[10px]">Tailsitter VTOL</span>
+</div>
+<div class="text-[#8b949e] text-[9px]">MC attitude controller runs during transition (different from standard/tiltrotor)</div>
+</div>
+</div>
+</div>
+
+<!-- Control Allocation -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-3 shadow-xl flex-1 min-h-0">
+<h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+<i class="fa-solid fa-sitemap text-[#a371f7]"></i> Control Allocation
+</h3>
+<div class="space-y-1.5 text-xs">
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-circle text-[#238636] mt-1 text-[6px]"></i>
+<div>
+<span class="text-white font-bold text-xs">Dual Output Streams:</span>
+<div class="text-[#8b949e] mt-0.5 text-[9px]">Separate torque/force commands for MC and FW actuators (two instances of vehicle_torque_setpoint and vehicle_thrust_setpoint)</div>
+</div>
+</div>
+
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-circle text-[#2f81f7] mt-1 text-[6px]"></i>
+<div>
+<span class="text-white font-bold text-xs">Airframe-Specific:</span>
+<div class="text-[#8b949e] mt-0.5 text-[9px]">Handled by dedicated control allocation class for each VTOL configuration</div>
+</div>
+</div>
+
+<div class="flex items-start gap-2">
+<i class="fa-solid fa-circle text-[#d29922] mt-1 text-[6px]"></i>
+<div>
+<span class="text-white font-bold text-xs">Tuning Reference:</span>
+<div class="text-[#8b949e] mt-0.5 text-[9px]">See VTOL Configuration for transition logic tuning parameters</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Footer Info -->
+<div class="h-12 bg-[#161b22] border-t border-[#30363d] flex items-center px-8 justify-between">
+<div class="flex items-center gap-2 text-xs text-[#8b949e]">
+<i class="fa-solid fa-info-circle text-[#2f81f7]"></i>
+<span>VTOL aircraft combine the advantages of multicopters and fixed-wing aircraft</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono text-[#8b949e]">
+<span>Reference: PX4 Controller Diagrams</span>
+</div>
+</div>
+</div>
+</body>
+</html>

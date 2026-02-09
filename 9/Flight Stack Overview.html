@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Flight Stack Overview</title>
+<script src="Flight%20Stack%20Overview_files/3.4.17"></script>
+<link href="Flight%20Stack%20Overview_files/css2.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.bottom-4{bottom:1rem}.left-1\/2{left:50%}.top-4{top:1rem}.-z-0{z-index:0}.z-10{z-index:10}.col-span-2{grid-column:span 2 / span 2}.m-0{margin:0px}.-my-1{margin-top:-0.25rem;margin-bottom:-0.25rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.grid{display:grid}.h-1{height:0.25rem}.h-10{height:2.5rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-\[720px\]{height:720px}.h-full{height:100%}.min-h-\[40px\]{min-height:40px}.w-0\.5{width:0.125rem}.w-1{width:0.25rem}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-\[1280px\]{width:1280px}.w-\[500px\]{width:500px}.w-full{width:100%}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-10{gap:2.5rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-\[\#1f6feb40\]{border-color:#1f6feb40}.border-\[\#1f6feb60\]{border-color:#1f6feb60}.border-\[\#23863640\]{border-color:#23863640}.border-\[\#238636\]\/30{border-color:rgb(35 134 54 / 0.3)}.border-\[\#30363d\]{--tw-border-opacity:1;border-color:rgb(48 54 61 / var(--tw-border-opacity, 1))}.border-\[\#a371f740\]{border-color:#a371f740}.border-\[\#d2992240\]{border-color:#d2992240}.border-\[\#da363340\]{border-color:#da363340}.bg-\[\#0d1117\]{--tw-bg-opacity:1;background-color:rgb(13 17 23 / var(--tw-bg-opacity, 1))}.bg-\[\#161b22\]{--tw-bg-opacity:1;background-color:rgb(22 27 34 / var(--tw-bg-opacity, 1))}.bg-\[\#1f6feb15\]{background-color:#1f6feb15}.bg-\[\#1f6feb20\]{background-color:#1f6feb20}.bg-\[\#23863615\]{background-color:#23863615}.bg-\[\#23863620\]{background-color:#23863620}.bg-\[\#238636\]\/10{background-color:rgb(35 134 54 / 0.1)}.bg-\[\#2f81f7\]{--tw-bg-opacity:1;background-color:rgb(47 129 247 / var(--tw-bg-opacity, 1))}.bg-\[\#30363d\]{--tw-bg-opacity:1;background-color:rgb(48 54 61 / var(--tw-bg-opacity, 1))}.bg-\[\#a371f715\]{background-color:#a371f715}.bg-\[\#a371f7\]{--tw-bg-opacity:1;background-color:rgb(163 113 247 / var(--tw-bg-opacity, 1))}.bg-\[\#d2992215\]{background-color:#d2992215}.bg-\[\#d29922\]{--tw-bg-opacity:1;background-color:rgb(210 153 34 / var(--tw-bg-opacity, 1))}.bg-\[\#da363315\]{background-color:#da363315}.bg-\[\#da3633\]{--tw-bg-opacity:1;background-color:rgb(218 54 51 / var(--tw-bg-opacity, 1))}.p-0{padding:0px}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-6{padding:1.5rem}.px-12{padding-left:3rem;padding-right:3rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.pb-4{padding-bottom:1rem}.text-center{text-align:center}.font-mono{font-family:JetBrains Mono, monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-\[\#238636\]{--tw-text-opacity:1;color:rgb(35 134 54 / var(--tw-text-opacity, 1))}.text-\[\#2ea043\]{--tw-text-opacity:1;color:rgb(46 160 67 / var(--tw-text-opacity, 1))}.text-\[\#2f81f7\]{--tw-text-opacity:1;color:rgb(47 129 247 / var(--tw-text-opacity, 1))}.text-\[\#8b949e\]{--tw-text-opacity:1;color:rgb(139 148 158 / var(--tw-text-opacity, 1))}.text-\[\#a371f7\]{--tw-text-opacity:1;color:rgb(163 113 247 / var(--tw-text-opacity, 1))}.text-\[\#c9d1d9\]{--tw-text-opacity:1;color:rgb(201 209 217 / var(--tw-text-opacity, 1))}.text-\[\#d29922\]{--tw-text-opacity:1;color:rgb(210 153 34 / var(--tw-text-opacity, 1))}.text-\[\#da3633\]{--tw-text-opacity:1;color:rgb(218 54 51 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-\[\#1f6feb25\]:hover{background-color:#1f6feb25}.hover\:bg-\[\#23863625\]:hover{background-color:#23863625}.hover\:bg-\[\#a371f725\]:hover{background-color:#a371f725}.hover\:bg-\[\#d2992225\]:hover{background-color:#d2992225}.hover\:bg-\[\#da363325\]:hover{background-color:#da363325}.group:hover .group-hover\:bg-\[\#58a6ff\]{--tw-bg-opacity:1;background-color:rgb(88 166 255 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#bc8cff\]{--tw-bg-opacity:1;background-color:rgb(188 140 255 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#e3b341\]{--tw-bg-opacity:1;background-color:rgb(227 179 65 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#f85149\]{--tw-bg-opacity:1;background-color:rgb(248 81 73 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:text-\[\#58a6ff\]{--tw-text-opacity:1;color:rgb(88 166 255 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-\[\#bc8cff\]{--tw-text-opacity:1;color:rgb(188 140 255 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-\[\#e3b341\]{--tw-text-opacity:1;color:rgb(227 179 65 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-\[\#f85149\]{--tw-text-opacity:1;color:rgb(248 81 73 / var(--tw-text-opacity, 1))}</style><style id="slide-selected-style">
+  [data-slide-selected]::before
+  /* [data-slide-hover-selected]::before */ {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    padding: 4px;
+    border-radius: 0px;
+    outline: 2px solid #0f7fff !important;
+    z-index: 10000;
+    pointer-events: none;
+  }
+
+ /* [data-slide-hover-selected], */
+  [data-slide-selected] {
+    position: relative;
+    outline: none;
+    cursor: default;
+  }
+
+  img[data-slide-selected],
+  img[data-slide-hover-selected],
+  [data-slide-hover-selected],
+  [item-slide-click-selected],
+  [item-slide-selected] {
+    border: 2px solid #0f7fff !important;
+  }
+
+
+</style></head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-[1280px] h-[720px] relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / flight-stack</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#1f6feb20] border border-[#1f6feb60]">
+<div class="w-2 h-2 rounded-full bg-[#2f81f7]"></div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex px-12 py-10 gap-10">
+<!-- Left Column: Architecture Diagram -->
+<div class="flex-1 flex flex-col relative bg-[#161b22] border border-[#30363d] rounded-xl p-6 shadow-xl overflow-hidden">
+<h3 class="text-xl font-bold text-white mb-6 border-b border-[#30363d] pb-4 flex items-center gap-2">
+<i class="fa-solid fa-plane-circle-check text-[#238636]"></i> Flight Control Pipeline
+                </h3>
+<div class="flex-1 flex flex-col gap-3 relative justify-center h-full">
+<!-- Vertical Pipeline Line -->
+<div class="absolute left-1/2 top-4 bottom-4 w-0.5 bg-[#30363d] -z-0 transform -translate-x-1/2"></div>
+<!-- Sensors -->
+<div class="relative z-10 bg-[#1f6feb15] border border-[#1f6feb40] rounded-lg p-3 text-center transition-all hover:bg-[#1f6feb25] w-full max-w-md mx-auto">
+<div class="flex items-center justify-center gap-2 mb-1">
+<i class="fa-solid fa-microchip text-[#2f81f7]"></i>
+<p class="text-[#2f81f7] font-bold text-sm uppercase tracking-wider">Sensors</p>
+</div>
+<div class="flex justify-center gap-2 flex-wrap">
+<span class="px-2 py-0.5 bg-[#1f6feb20] rounded text-[10px] text-white font-mono border border-[#1f6feb40]">IMU</span>
+<span class="px-2 py-0.5 bg-[#1f6feb20] rounded text-[10px] text-white font-mono border border-[#1f6feb40]">Mag</span>
+<span class="px-2 py-0.5 bg-[#1f6feb20] rounded text-[10px] text-white font-mono border border-[#1f6feb40]">Baro</span>
+<span class="px-2 py-0.5 bg-[#1f6feb20] rounded text-[10px] text-white font-mono border border-[#1f6feb40]">GPS</span>
+</div>
+</div>
+<!-- Arrow -->
+<div class="flex justify-center -my-1 z-10 text-[#8b949e]"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+<!-- Estimation -->
+<div class="relative z-10 bg-[#d2992215] border border-[#d2992240] rounded-lg p-3 text-center transition-all hover:bg-[#d2992225] w-full max-w-md mx-auto">
+<div class="flex items-center justify-center gap-2 mb-1">
+<i class="fa-solid fa-calculator text-[#d29922]"></i>
+<p class="text-[#d29922] font-bold text-sm uppercase tracking-wider">Estimation (EKF2)</p>
+</div>
+<p class="text-[10px] text-[#8b949e]">Fuses sensor data to estimate state (Position, Attitude, Velocity)</p>
+</div>
+<!-- Arrow -->
+<div class="flex justify-center -my-1 z-10 text-[#8b949e]"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+<!-- Controllers -->
+<div class="relative z-10 bg-[#23863615] border border-[#23863640] rounded-lg p-3 text-center transition-all hover:bg-[#23863625] w-full max-w-md mx-auto">
+<div class="flex items-center justify-center gap-2 mb-1">
+<i class="fa-solid fa-gamepad text-[#2ea043]"></i>
+<p class="text-[#2ea043] font-bold text-sm uppercase tracking-wider">Controllers</p>
+</div>
+<div class="grid grid-cols-2 gap-2 text-[10px]">
+<div class="bg-[#23863620] p-1 rounded border border-[#23863640]">Position Control</div>
+<div class="bg-[#23863620] p-1 rounded border border-[#23863640]">Attitude Control</div>
+<div class="bg-[#23863620] p-1 rounded border border-[#23863640] col-span-2">Rate Control</div>
+</div>
+</div>
+<!-- Arrow -->
+<div class="flex justify-center -my-1 z-10 text-[#8b949e]"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+<!-- Mixing / Allocation -->
+<div class="relative z-10 bg-[#da363315] border border-[#da363340] rounded-lg p-3 text-center transition-all hover:bg-[#da363325] w-full max-w-md mx-auto">
+<div class="flex items-center justify-center gap-2 mb-1">
+<i class="fa-solid fa-sliders text-[#da3633]"></i>
+<p class="text-[#da3633] font-bold text-sm uppercase tracking-wider">Control Allocation</p>
+</div>
+<p class="text-[10px] text-[#8b949e]">Maps forces/torques to motor/servo outputs</p>
+</div>
+<!-- Arrow -->
+<div class="flex justify-center -my-1 z-10 text-[#8b949e]"><i class="fa-solid fa-chevron-down text-xs"></i></div>
+<!-- Actuators -->
+<div class="relative z-10 bg-[#a371f715] border border-[#a371f740] rounded-lg p-2 text-center transition-all hover:bg-[#a371f725] w-full max-w-md mx-auto">
+<div class="flex items-center justify-center gap-2">
+<i class="fa-solid fa-gears text-[#a371f7]"></i>
+<p class="text-[#a371f7] font-bold text-sm uppercase tracking-wider">Actuator Outputs</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Key Points -->
+<div class="w-[500px] flex flex-col justify-center">
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded bg-[#238636]/10 flex items-center justify-center text-[#238636] border border-[#238636]/30">
+<i class="fa-solid fa-route"></i>
+</div>
+<h2 class="text-3xl font-bold text-white">The Flight Stack</h2>
+</div>
+<p class="text-[#8b949e] text-lg leading-relaxed">
+                        A strictly ordered pipeline transforms raw 
+sensor data into precise actuator commands through estimation and 
+cascaded control loops.
+                    </p>
+</div>
+<div class="space-y-6">
+<!-- Point 1 -->
+<div class="flex gap-4 group">
+<div class="mt-1 w-1 h-full min-h-[40px] rounded bg-[#2f81f7] group-hover:bg-[#58a6ff] transition-colors"></div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1 group-hover:text-[#58a6ff] transition-colors">Cascaded Control</h4>
+<p class="text-[#8b949e] text-sm leading-relaxed">
+                                Position → Velocity → Attitude → Rate. 
+Each outer loop provides setpoints to the inner loop, running at 
+increasing frequencies.
+                            </p>
+</div>
+</div>
+<!-- Point 2 -->
+<div class="flex gap-4 group">
+<div class="mt-1 w-1 h-full min-h-[40px] rounded bg-[#d29922] group-hover:bg-[#e3b341] transition-colors"></div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1 group-hover:text-[#e3b341] transition-colors">Commander &amp; Navigator</h4>
+<p class="text-[#8b949e] text-sm leading-relaxed">
+                                High-level modules handle state machine 
+transitions (Armed/Disarmed, Modes) and mission logic, feeding setpoints
+ to controllers.
+                            </p>
+</div>
+</div>
+<!-- Point 3 -->
+<div class="flex gap-4 group">
+<div class="mt-1 w-1 h-full min-h-[40px] rounded bg-[#da3633] group-hover:bg-[#f85149] transition-colors"></div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1 group-hover:text-[#f85149] transition-colors">Control Allocation</h4>
+<p class="text-[#8b949e] text-sm leading-relaxed">
+                                Decouples control logic from airframe 
+geometry. Controllers request physical forces/torques; allocator maps 
+them to available motors/servos.
+                            </p>
+</div>
+</div>
+<!-- Point 4 -->
+<div class="flex gap-4 group">
+<div class="mt-1 w-1 h-full min-h-[40px] rounded bg-[#a371f7] group-hover:bg-[#bc8cff] transition-colors"></div>
+<div>
+<h4 class="text-white font-bold text-lg mb-1 group-hover:text-[#bc8cff] transition-colors">TECS (Fixed-Wing)</h4>
+<p class="text-[#8b949e] text-sm leading-relaxed">
+                                Total Energy Control System manages 
+potential (altitude) and kinetic (airspeed) energy balance using 
+throttle and pitch.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="h-1 bg-[#30363d]"></div>
+</div>
+<script defer="defer" src="Flight%20Stack%20Overview_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015.es" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;9cb0cd751d1cf08b&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}},&quot;version&quot;:&quot;2025.9.1&quot;,&quot;token&quot;:&quot;4edd5f8ec12a48cfa682ab8261b80a79&quot;}" crossorigin="anonymous"></script>
+
+<script src="Flight%20Stack%20Overview_files/slide-inner.js"></script></body></html>

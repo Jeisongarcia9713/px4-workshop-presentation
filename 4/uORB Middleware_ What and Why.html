@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>uORB Middleware: What and Why</title>
+<script src="uORB%20Middleware_%20What%20and%20Why_files/3.4.17"></script>
+<link href="uORB%20Middleware_%20What%20and%20Why_files/css2.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.bottom-0{bottom:0px}.left-1\/2{left:50%}.left-4{left:1rem}.right-4{right:1rem}.top-1\/2{top:50%}.z-10{z-index:10}.m-0{margin:0px}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.h-1{height:0.25rem}.h-1\.5{height:0.375rem}.h-10{height:2.5rem}.h-14{height:3.5rem}.h-16{height:4rem}.h-2{height:0.5rem}.h-40{height:10rem}.h-8{height:2rem}.h-\[720px\]{height:720px}.w-0\.5{width:0.125rem}.w-1\.5{width:0.375rem}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-32{width:8rem}.w-\[1280px\]{width:1280px}.w-\[700px\]{width:700px}.w-full{width:100%}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-45{--tw-rotate:45deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-\[\#1f6feb60\]{border-color:#1f6feb60}.border-\[\#1f6feb\]{--tw-border-opacity:1;border-color:rgb(31 111 235 / var(--tw-border-opacity, 1))}.border-\[\#238636\]{--tw-border-opacity:1;border-color:rgb(35 134 54 / var(--tw-border-opacity, 1))}.border-\[\#30363d\]{--tw-border-opacity:1;border-color:rgb(48 54 61 / var(--tw-border-opacity, 1))}.border-\[\#d29922\]{--tw-border-opacity:1;border-color:rgb(210 153 34 / var(--tw-border-opacity, 1))}.border-\[\#d29922\]\/50{border-color:rgb(210 153 34 / 0.5)}.bg-\[\#0d1117\]{--tw-bg-opacity:1;background-color:rgb(13 17 23 / var(--tw-bg-opacity, 1))}.bg-\[\#161b22\]{--tw-bg-opacity:1;background-color:rgb(22 27 34 / var(--tw-bg-opacity, 1))}.bg-\[\#1f6feb20\]{background-color:#1f6feb20}.bg-\[\#23863620\]{background-color:#23863620}.bg-\[\#238636\]\/10{background-color:rgb(35 134 54 / 0.1)}.bg-\[\#238636\]\/20{background-color:rgb(35 134 54 / 0.2)}.bg-\[\#2f81f7\]{--tw-bg-opacity:1;background-color:rgb(47 129 247 / var(--tw-bg-opacity, 1))}.bg-\[\#2f81f7\]\/10{background-color:rgb(47 129 247 / 0.1)}.bg-\[\#30363d\]{--tw-bg-opacity:1;background-color:rgb(48 54 61 / var(--tw-bg-opacity, 1))}.bg-\[\#d29922\]{--tw-bg-opacity:1;background-color:rgb(210 153 34 / var(--tw-bg-opacity, 1))}.bg-\[\#d29922\]\/10{background-color:rgb(210 153 34 / 0.1)}.bg-\[\#d29922\]\/20{background-color:rgb(210 153 34 / 0.2)}.bg-\[\#da3633\]\/10{background-color:rgb(218 54 51 / 0.1)}.p-0{padding:0px}.p-3{padding:0.75rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-16{padding-left:4rem;padding-right:4rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.pb-1{padding-bottom:0.25rem}.font-mono{font-family:JetBrains Mono, monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-\[\#238636\]{--tw-text-opacity:1;color:rgb(35 134 54 / var(--tw-text-opacity, 1))}.text-\[\#2ea043\]{--tw-text-opacity:1;color:rgb(46 160 67 / var(--tw-text-opacity, 1))}.text-\[\#2f81f7\]{--tw-text-opacity:1;color:rgb(47 129 247 / var(--tw-text-opacity, 1))}.text-\[\#8b949e\]{--tw-text-opacity:1;color:rgb(139 148 158 / var(--tw-text-opacity, 1))}.text-\[\#c9d1d9\]{--tw-text-opacity:1;color:rgb(201 209 217 / var(--tw-text-opacity, 1))}.text-\[\#d29922\]{--tw-text-opacity:1;color:rgb(210 153 34 / var(--tw-text-opacity, 1))}.text-\[\#da3633\]{--tw-text-opacity:1;color:rgb(218 54 51 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-10{opacity:0.1}.shadow-\[0_0_15px_rgba\(31\2c 111\2c 235\2c 0\.2\)\]{--tw-shadow:0 0 15px rgba(31,111,235,0.2);--tw-shadow-colored:0 0 15px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_15px_rgba\(35\2c 134\2c 54\2c 0\.2\)\]{--tw-shadow:0 0 15px rgba(35,134,54,0.2);--tw-shadow-colored:0 0 15px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_20px_rgba\(210\2c 153\2c 34\2c 0\.1\)\]{--tw-shadow:0 0 20px rgba(210,153,34,0.1);--tw-shadow-colored:0 0 20px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.delay-150{transition-delay:150ms}.delay-75{transition-delay:75ms}.hover\:border-\[\#238636\]:hover{--tw-border-opacity:1;border-color:rgb(35 134 54 / var(--tw-border-opacity, 1))}.hover\:border-\[\#2f81f7\]:hover{--tw-border-opacity:1;border-color:rgb(47 129 247 / var(--tw-border-opacity, 1))}.hover\:border-\[\#d29922\]:hover{--tw-border-opacity:1;border-color:rgb(210 153 34 / var(--tw-border-opacity, 1))}.hover\:border-\[\#da3633\]:hover{--tw-border-opacity:1;border-color:rgb(218 54 51 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:bg-\[\#238636\]{--tw-bg-opacity:1;background-color:rgb(35 134 54 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#2f81f7\]{--tw-bg-opacity:1;background-color:rgb(47 129 247 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#d29922\]{--tw-bg-opacity:1;background-color:rgb(210 153 34 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#da3633\]{--tw-bg-opacity:1;background-color:rgb(218 54 51 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}</style><style id="slide-selected-style">
+  [data-slide-selected]::before
+  /* [data-slide-hover-selected]::before */ {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    padding: 4px;
+    border-radius: 0px;
+    outline: 2px solid #0f7fff !important;
+    z-index: 10000;
+    pointer-events: none;
+  }
+
+ /* [data-slide-hover-selected], */
+  [data-slide-selected] {
+    position: relative;
+    outline: none;
+    cursor: default;
+  }
+
+  img[data-slide-selected],
+  img[data-slide-hover-selected],
+  [data-slide-hover-selected],
+  [item-slide-click-selected],
+  [item-slide-selected] {
+    border: 2px solid #0f7fff !important;
+  }
+
+
+</style></head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-[1280px] h-[720px] relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / middleware / uorb</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#1f6feb20] border border-[#1f6feb60]">
+<div class="w-2 h-2 rounded-full bg-[#2f81f7]"></div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex px-16 py-12 gap-12">
+<!-- Left Column: Key Points -->
+<div class="w-[700px] flex flex-col">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded bg-[#d29922]/20 flex items-center justify-center text-[#d29922] border border-[#d29922]/50">
+<i class="fa-solid fa-network-wired text-xl"></i>
+</div>
+<h2 class="text-3xl font-bold text-white">uORB: The Nervous System</h2>
+</div>
+<div class="space-y-6">
+<!-- Point 1 -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 hover:border-[#d29922] transition-colors group">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-[#d29922]/10 flex items-center justify-center text-[#d29922] group-hover:bg-[#d29922] group-hover:text-white transition-all shrink-0">
+<i class="fa-solid fa-bullhorn"></i>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-2">Asynchronous Pub/Sub API</h3>
+<p class="text-[#8b949e] leading-relaxed">
+                                    Micro Object Request Broker. 
+Decouples modules so they communicate without direct dependencies. 
+Publishers advertise data; subscribers listen for updates.
+                                </p>
+</div>
+</div>
+</div>
+<!-- Point 2 -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 hover:border-[#2f81f7] transition-colors group">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-[#2f81f7]/10 flex items-center justify-center text-[#2f81f7] group-hover:bg-[#2f81f7] group-hover:text-white transition-all shrink-0">
+<i class="fa-solid fa-memory"></i>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-2">Thread-Safe Shared Memory</h3>
+<p class="text-[#8b949e] leading-relaxed">
+                                    Zero-copy mechanism for efficient 
+data transport between threads and processes. Crucial for high-frequency
+ sensor data (IMU @ 1kHz).
+                                </p>
+</div>
+</div>
+</div>
+<!-- Point 3 -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 hover:border-[#238636] transition-colors group">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-[#238636]/10 flex items-center justify-center text-[#238636] group-hover:bg-[#238636] group-hover:text-white transition-all shrink-0">
+<i class="fa-solid fa-bolt"></i>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-2">Reactive System Design</h3>
+<p class="text-[#8b949e] leading-relaxed">
+                                    Enables event-driven architecture. 
+WorkQueue modules can "wake up" only when a subscribed topic (e.g., <code class="text-[#2ea043] bg-[#238636]/20 px-1 rounded font-mono text-xs">vehicle_attitude</code>) updates.
+                                </p>
+</div>
+</div>
+</div>
+<!-- Point 4 -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 hover:border-[#da3633] transition-colors group">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-[#da3633]/10 flex items-center justify-center text-[#da3633] group-hover:bg-[#da3633] group-hover:text-white transition-all shrink-0">
+<i class="fa-solid fa-stethoscope"></i>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-2">Introspection Tools</h3>
+<p class="text-[#8b949e] leading-relaxed">
+                                    Built-in CLI commands for debugging.
+ Inspect system health, message rates, and content in real-time on the 
+console.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Visual / Code -->
+<div class="flex-1 flex flex-col">
+<!-- Visual Diagram -->
+<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-6 mb-6 flex-1 flex flex-col relative overflow-hidden">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#d29922 1px, transparent 1px); background-size: 20px 20px;"></div>
+<h3 class="text-sm font-mono text-[#8b949e] mb-4 uppercase tracking-wider z-10">Data Flow</h3>
+<div class="flex-1 flex flex-col items-center justify-center gap-6 z-10">
+<!-- Publisher Node -->
+<div class="flex flex-col items-center">
+<div class="px-4 py-2 bg-[#1f6feb20] border border-[#1f6feb] rounded text-[#2f81f7] font-mono font-bold text-sm shadow-[0_0_15px_rgba(31,111,235,0.2)]">
+                                Driver / Estimator
+                            </div>
+<div class="text-[10px] text-[#8b949e] mt-1 font-mono">Publisher</div>
+</div>
+<!-- Arrow Down -->
+<div class="h-8 w-0.5 bg-[#30363d] relative">
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 border-r border-b border-[#30363d] rotate-45"></div>
+</div>
+<!-- uORB Bus -->
+<div class="w-full h-16 bg-[#161b22] border border-[#d29922] rounded-lg flex items-center justify-center relative shadow-[0_0_20px_rgba(210,153,34,0.1)]">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-[#d29922] text-xl">
+<i class="fa-solid fa-server"></i>
+</div>
+<div class="font-mono font-bold text-white">uORB Topic: <span class="text-[#d29922]">sensor_gyro</span></div>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-[#d29922] animate-pulse"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-[#d29922] animate-pulse delay-75"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-[#d29922] animate-pulse delay-150"></div>
+</div>
+</div>
+<!-- Arrow Down -->
+<div class="h-8 w-0.5 bg-[#30363d] relative">
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 border-r border-b border-[#30363d] rotate-45"></div>
+</div>
+<!-- Subscribers -->
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<div class="px-4 py-2 bg-[#23863620] border border-[#238636] rounded text-[#2ea043] font-mono font-bold text-sm shadow-[0_0_15px_rgba(35,134,54,0.2)]">
+                                    Logger
+                                </div>
+<div class="text-[10px] text-[#8b949e] mt-1 font-mono">Sub 1</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="px-4 py-2 bg-[#23863620] border border-[#238636] rounded text-[#2ea043] font-mono font-bold text-sm shadow-[0_0_15px_rgba(35,134,54,0.2)]">
+                                    Controller
+                                </div>
+<div class="text-[10px] text-[#8b949e] mt-1 font-mono">Sub 2</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CLI Window -->
+<div class="bg-[#0d1117] border border-[#30363d] rounded-lg overflow-hidden h-40 flex flex-col">
+<div class="bg-[#161b22] px-3 py-1 border-b border-[#30363d] flex items-center gap-2">
+<i class="fa-solid fa-terminal text-[#8b949e] text-xs"></i>
+<span class="text-xs font-mono text-[#8b949e]">MAVLink Console</span>
+</div>
+<div class="p-3 font-mono text-xs flex-1 overflow-hidden">
+<p class="text-[#2ea043] mb-1">pxh&gt; <span class="text-white">uorb top</span></p>
+<div class="text-[#8b949e]">
+<p class="flex gap-8 border-b border-[#30363d] pb-1 mb-1"><span class="w-32">TOPIC NAME</span><span>RATE</span><span>#SUB</span></p>
+<p class="flex gap-8"><span class="w-32 text-[#d29922]">sensor_gyro</span><span class="text-white">1000</span><span class="text-white">4</span></p>
+<p class="flex gap-8"><span class="w-32 text-[#d29922]">vehicle_status</span><span class="text-white">5</span><span class="text-white">8</span></p>
+<p class="flex gap-8"><span class="w-32 text-[#d29922]">battery_status</span><span class="text-white">10</span><span class="text-white">2</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="h-1 bg-[#30363d]"></div>
+</div>
+<script defer="defer" src="uORB%20Middleware_%20What%20and%20Why_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015.es" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;9cb0c5e369eaf3f9&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}},&quot;version&quot;:&quot;2025.9.1&quot;,&quot;token&quot;:&quot;4edd5f8ec12a48cfa682ab8261b80a79&quot;}" crossorigin="anonymous"></script>
+
+<script src="uORB%20Middleware_%20What%20and%20Why_files/slide-inner.js"></script></body></html>

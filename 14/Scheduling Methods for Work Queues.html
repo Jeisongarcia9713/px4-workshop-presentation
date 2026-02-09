@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Scheduling Methods for Work Queues</title>
+<script src="Scheduling%20Methods%20for%20Work%20Queues_files/3.4.17"></script>
+<link href="Scheduling%20Methods%20for%20Work%20Queues_files/css2.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.left-0{left:0px}.left-\[10\%\]{left:10%}.left-\[40\%\]{left:40%}.left-\[70\%\]{left:70%}.left-\[90\%\]{left:90%}.right-0{right:0px}.top-1\/2{top:50%}.top-\[15\%\]{top:15%}.top-\[20\%\]{top:20%}.z-10{z-index:10}.m-0{margin:0px}.-mt-2{margin-top:-0.5rem}.mb-1{margin-bottom:0.25rem}.mb-3{margin-bottom:0.75rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.flex{display:flex}.h-0\.5{height:0.125rem}.h-1{height:0.25rem}.h-10{height:2.5rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-3{height:0.75rem}.h-4{height:1rem}.h-8{height:2rem}.h-\[280px\]{height:280px}.h-\[720px\]{height:720px}.w-0\.5{width:0.125rem}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-3{width:0.75rem}.w-\[1280px\]{width:1280px}.w-\[30\%\]{width:30%}.w-\[700px\]{width:700px}.w-full{width:100%}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-\[\#0d1117\]{--tw-border-opacity:1;border-color:rgb(13 17 23 / var(--tw-border-opacity, 1))}.border-\[\#1f6feb60\]{border-color:#1f6feb60}.border-\[\#1f6feb\]{--tw-border-opacity:1;border-color:rgb(31 111 235 / var(--tw-border-opacity, 1))}.border-\[\#238636\]{--tw-border-opacity:1;border-color:rgb(35 134 54 / var(--tw-border-opacity, 1))}.border-\[\#238636\]\/50{border-color:rgb(35 134 54 / 0.5)}.border-\[\#30363d\]{--tw-border-opacity:1;border-color:rgb(48 54 61 / var(--tw-border-opacity, 1))}.border-\[\#8b949e\]\/30{border-color:rgb(139 148 158 / 0.3)}.border-\[\#a371f7\]\/50{border-color:rgb(163 113 247 / 0.5)}.border-\[\#d29922\]{--tw-border-opacity:1;border-color:rgb(210 153 34 / var(--tw-border-opacity, 1))}.bg-\[\#0d1117\]{--tw-bg-opacity:1;background-color:rgb(13 17 23 / var(--tw-bg-opacity, 1))}.bg-\[\#161b22\]{--tw-bg-opacity:1;background-color:rgb(22 27 34 / var(--tw-bg-opacity, 1))}.bg-\[\#1f6feb20\]{background-color:#1f6feb20}.bg-\[\#238636\]{--tw-bg-opacity:1;background-color:rgb(35 134 54 / var(--tw-bg-opacity, 1))}.bg-\[\#238636\]\/10{background-color:rgb(35 134 54 / 0.1)}.bg-\[\#238636\]\/20{background-color:rgb(35 134 54 / 0.2)}.bg-\[\#2f81f7\]{--tw-bg-opacity:1;background-color:rgb(47 129 247 / var(--tw-bg-opacity, 1))}.bg-\[\#2f81f7\]\/10{background-color:rgb(47 129 247 / 0.1)}.bg-\[\#30363d\]{--tw-bg-opacity:1;background-color:rgb(48 54 61 / var(--tw-bg-opacity, 1))}.bg-\[\#a371f7\]\/20{background-color:rgb(163 113 247 / 0.2)}.bg-\[\#d29922\]{--tw-bg-opacity:1;background-color:rgb(210 153 34 / var(--tw-bg-opacity, 1))}.bg-\[\#d29922\]\/10{background-color:rgb(210 153 34 / 0.1)}.bg-\[\#d29922\]\/20{background-color:rgb(210 153 34 / 0.2)}.bg-\[\#da3633\]\/10{background-color:rgb(218 54 51 / 0.1)}.p-0{padding:0px}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-16{padding-left:4rem;padding-right:4rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-12{padding-top:3rem;padding-bottom:3rem}.font-mono{font-family:JetBrains Mono, monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.text-\[\#238636\]{--tw-text-opacity:1;color:rgb(35 134 54 / var(--tw-text-opacity, 1))}.text-\[\#2ea043\]{--tw-text-opacity:1;color:rgb(46 160 67 / var(--tw-text-opacity, 1))}.text-\[\#2f81f7\]{--tw-text-opacity:1;color:rgb(47 129 247 / var(--tw-text-opacity, 1))}.text-\[\#8b949e\]{--tw-text-opacity:1;color:rgb(139 148 158 / var(--tw-text-opacity, 1))}.text-\[\#a371f7\]{--tw-text-opacity:1;color:rgb(163 113 247 / var(--tw-text-opacity, 1))}.text-\[\#c9d1d9\]{--tw-text-opacity:1;color:rgb(201 209 217 / var(--tw-text-opacity, 1))}.text-\[\#d29922\]{--tw-text-opacity:1;color:rgb(210 153 34 / var(--tw-text-opacity, 1))}.text-\[\#da3633\]{--tw-text-opacity:1;color:rgb(218 54 51 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-0{opacity:0}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-\[\#238636\]:hover{--tw-border-opacity:1;border-color:rgb(35 134 54 / var(--tw-border-opacity, 1))}.hover\:border-\[\#2f81f7\]:hover{--tw-border-opacity:1;border-color:rgb(47 129 247 / var(--tw-border-opacity, 1))}.hover\:border-\[\#d29922\]:hover{--tw-border-opacity:1;border-color:rgb(210 153 34 / var(--tw-border-opacity, 1))}.hover\:border-\[\#da3633\]:hover{--tw-border-opacity:1;border-color:rgb(218 54 51 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:bg-\[\#238636\]{--tw-bg-opacity:1;background-color:rgb(35 134 54 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#2f81f7\]{--tw-bg-opacity:1;background-color:rgb(47 129 247 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#d29922\]{--tw-bg-opacity:1;background-color:rgb(210 153 34 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-\[\#da3633\]{--tw-bg-opacity:1;background-color:rgb(218 54 51 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:opacity-100{opacity:1}</style><style id="slide-selected-style">
+  [data-slide-selected]::before
+  /* [data-slide-hover-selected]::before */ {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    padding: 4px;
+    border-radius: 0px;
+    outline: 2px solid #0f7fff !important;
+    z-index: 10000;
+    pointer-events: none;
+  }
+
+ /* [data-slide-hover-selected], */
+  [data-slide-selected] {
+    position: relative;
+    outline: none;
+    cursor: default;
+  }
+
+  img[data-slide-selected],
+  img[data-slide-hover-selected],
+  [data-slide-hover-selected],
+  [item-slide-click-selected],
+  [item-slide-selected] {
+    border: 2px solid #0f7fff !important;
+  }
+
+
+</style></head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-[1280px] h-[720px] relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / modules / scheduling</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#1f6feb20] border border-[#1f6feb60]">
+<div class="w-2 h-2 rounded-full bg-[#2f81f7]"></div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex px-16 py-12 gap-12">
+<!-- Left Column: Key Points -->
+<div class="w-[700px] flex flex-col">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded bg-[#a371f7]/20 flex items-center justify-center text-[#a371f7] border border-[#a371f7]/50">
+<i class="fa-solid fa-clock text-xl"></i>
+</div>
+<h2 class="text-3xl font-bold text-white">Work Queue Scheduling</h2>
+</div>
+<div class="space-y-5">
+<!-- Point 1: Periodic -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4 hover:border-[#2f81f7] transition-colors group">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-[#2f81f7]/10 flex items-center justify-center text-[#2f81f7] group-hover:bg-[#2f81f7] group-hover:text-white transition-all shrink-0">
+<i class="fa-solid fa-arrows-rotate"></i>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-1 flex items-center gap-3">
+                                    Periodic Scheduling
+                                    <code class="text-xs font-mono bg-[#30363d] px-2 py-0.5 rounded text-[#2f81f7]">ScheduleOnInterval(us)</code>
+</h3>
+<p class="text-[#8b949e] text-sm leading-relaxed">
+                                    Runs the module at a fixed 
+frequency. Ideal for controllers or estimators needing consistent update
+ rates (e.g., 50Hz control loops).
+                                </p>
+</div>
+</div>
+</div>
+<!-- Point 2: Delayed/One-shot -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4 hover:border-[#d29922] transition-colors group">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-[#d29922]/10 flex items-center justify-center text-[#d29922] group-hover:bg-[#d29922] group-hover:text-white transition-all shrink-0">
+<i class="fa-solid fa-hourglass-start"></i>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-1 flex items-center gap-3">
+                                    Delayed One-Shot
+                                    <code class="text-xs font-mono bg-[#30363d] px-2 py-0.5 rounded text-[#d29922]">ScheduleDelayed(us)</code>
+</h3>
+<p class="text-[#8b949e] text-sm leading-relaxed">
+                                    Executes once after a specific 
+delay. Useful for initialization sequences, timeouts, or retrying failed
+ operations without blocking.
+                                </p>
+</div>
+</div>
+</div>
+<!-- Point 3: Event-Driven -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4 hover:border-[#238636] transition-colors group">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-[#238636]/10 flex items-center justify-center text-[#238636] group-hover:bg-[#238636] group-hover:text-white transition-all shrink-0">
+<i class="fa-solid fa-bolt"></i>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-1 flex items-center gap-3">
+                                    Event-Driven (Topic Update)
+                                    <span class="text-xs bg-[#238636]/20 text-[#2ea043] px-2 py-0.5 rounded border border-[#238636]/50">Recommended</span>
+</h3>
+<p class="text-[#8b949e] text-sm leading-relaxed">
+                                    Using <code class="font-mono text-[#c9d1d9] text-xs">SubscriptionCallbackWorkItem</code>. Wakes up the module immediately when a uORB topic is published. Minimizes latency and CPU usage.
+                                </p>
+</div>
+</div>
+</div>
+<!-- Point 4: Immediate -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-4 hover:border-[#da3633] transition-colors group">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-[#da3633]/10 flex items-center justify-center text-[#da3633] group-hover:bg-[#da3633] group-hover:text-white transition-all shrink-0">
+<i class="fa-solid fa-forward"></i>
+</div>
+<div>
+<h3 class="text-white font-bold text-lg mb-1 flex items-center gap-3">
+                                    Immediate Execution
+                                    <code class="text-xs font-mono bg-[#30363d] px-2 py-0.5 rounded text-[#da3633]">ScheduleNow()</code>
+</h3>
+<p class="text-[#8b949e] text-sm leading-relaxed">
+                                    Places the item at the front of the 
+queue to run as soon as possible. Use sparingly for urgent processing to
+ avoid starving other tasks.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Visual / Code -->
+<div class="flex-1 flex flex-col gap-6">
+<!-- Timeline Visualization -->
+<div class="bg-[#0d1117] border border-[#30363d] rounded-xl p-6 flex flex-col relative overflow-hidden h-[280px]">
+<h3 class="text-sm font-mono text-[#8b949e] mb-6 uppercase tracking-wider">Execution Timeline</h3>
+<div class="flex-1 flex flex-col justify-center relative">
+<!-- Time Axis -->
+<div class="w-full h-0.5 bg-[#30363d] absolute top-1/2 left-0 right-0"></div>
+<!-- Event Driven -->
+<div class="absolute top-[20%] left-[10%] flex flex-col items-center group">
+<div class="text-[10px] text-[#2ea043] font-mono mb-1 opacity-0 group-hover:opacity-100 transition-opacity">Topic Update</div>
+<div class="w-3 h-3 rounded-full bg-[#238636] border-2 border-[#0d1117] relative z-10"></div>
+<div class="h-8 w-0.5 bg-[#238636] mt-1"></div>
+<div class="bg-[#238636]/20 border border-[#238636] text-[#2ea043] px-2 py-1 rounded text-[10px] font-mono">Run()</div>
+</div>
+<!-- Periodic -->
+<div class="absolute top-[20%] left-[40%] flex flex-col items-center">
+<div class="w-3 h-3 rounded-full bg-[#2f81f7] border-2 border-[#0d1117] relative z-10"></div>
+<div class="h-8 w-0.5 bg-[#2f81f7] mt-1"></div>
+<div class="bg-[#1f6feb20] border border-[#1f6feb] text-[#2f81f7] px-2 py-1 rounded text-[10px] font-mono">Run()</div>
+</div>
+<div class="absolute top-[20%] left-[70%] flex flex-col items-center">
+<div class="w-3 h-3 rounded-full bg-[#2f81f7] border-2 border-[#0d1117] relative z-10"></div>
+<div class="h-8 w-0.5 bg-[#2f81f7] mt-1"></div>
+<div class="bg-[#1f6feb20] border border-[#1f6feb] text-[#2f81f7] px-2 py-1 rounded text-[10px] font-mono">Run()</div>
+</div>
+<!-- Interval Label -->
+<div class="absolute top-[15%] left-[40%] w-[30%] h-4 border-t border-l border-r border-[#8b949e]/30 flex justify-center">
+<span class="bg-[#0d1117] px-1 text-[10px] text-[#8b949e] -mt-2">Period (dt)</span>
+</div>
+<!-- Delayed -->
+<div class="absolute top-[20%] left-[90%] flex flex-col items-center group">
+<div class="text-[10px] text-[#d29922] font-mono mb-1 opacity-0 group-hover:opacity-100 transition-opacity">Delay End</div>
+<div class="w-3 h-3 rounded-full bg-[#d29922] border-2 border-[#0d1117] relative z-10"></div>
+<div class="h-8 w-0.5 bg-[#d29922] mt-1"></div>
+<div class="bg-[#d29922]/20 border border-[#d29922] text-[#d29922] px-2 py-1 rounded text-[10px] font-mono">Run()</div>
+</div>
+</div>
+</div>
+<!-- HRT Timer Note -->
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 flex-1 flex flex-col justify-center">
+<div class="flex items-start gap-3">
+<i class="fa-solid fa-triangle-exclamation text-[#d29922] mt-1"></i>
+<div>
+<h4 class="text-white font-bold text-sm mb-1">High-Rate Requirements?</h4>
+<p class="text-[#8b949e] text-xs leading-relaxed mb-3">
+                                For extremely high rates (&gt;1kHz) or 
+strict timing that cannot tolerate queue latency, consider using HRT 
+callbacks directly, but be careful with blocking.
+                            </p>
+<div class="bg-[#0d1117] rounded border border-[#30363d] p-2 font-mono text-[10px] text-[#8b949e]">
+<span class="text-[#d29922]">hrt_call_every</span>(&amp;call, 1000, 1000, callback, NULL);
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="h-1 bg-[#30363d]"></div>
+</div>
+<script defer="defer" src="Scheduling%20Methods%20for%20Work%20Queues_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015.es" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;9cb0d65eb9852630&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}},&quot;version&quot;:&quot;2025.9.1&quot;,&quot;token&quot;:&quot;4edd5f8ec12a48cfa682ab8261b80a79&quot;}" crossorigin="anonymous"></script>
+
+<script src="Scheduling%20Methods%20for%20Work%20Queues_files/slide-inner.js"></script></body></html>

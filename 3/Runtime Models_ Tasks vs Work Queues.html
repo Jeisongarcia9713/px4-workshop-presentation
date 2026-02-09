@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Runtime Models: Tasks vs Work Queues</title>
+<script src="Runtime%20Models_%20Tasks%20vs%20Work%20Queues_files/3.4.17"></script>
+<link href="Runtime%20Models_%20Tasks%20vs%20Work%20Queues_files/css2.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.left-0{left:0px}.left-32{left:8rem}.left-4{left:1rem}.left-8{left:2rem}.left-\[108px\]{left:108px}.right-0{right:0px}.right-4{right:1rem}.top-0{top:0px}.top-16{top:4rem}.top-2{top:0.5rem}.top-6{top:1.5rem}.top-8{top:2rem}.z-10{z-index:10}.m-0{margin:0px}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-6{margin-bottom:1.5rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.block{display:block}.flex{display:flex}.h-1{height:0.25rem}.h-14{height:3.5rem}.h-16{height:4rem}.h-2{height:0.5rem}.h-20{height:5rem}.h-32{height:8rem}.h-4{height:1rem}.h-48{height:12rem}.h-8{height:2rem}.h-\[720px\]{height:720px}.w-16{width:4rem}.w-2{width:0.5rem}.w-24{width:6rem}.w-8{width:2rem}.w-\[1280px\]{width:1280px}.w-\[1px\]{width:1px}.flex-1{flex:1 1 0%}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-10{gap:2.5rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-\[\#1f6feb30\]{border-color:#1f6feb30}.border-\[\#1f6feb60\]{border-color:#1f6feb60}.border-\[\#1f6feb\]{--tw-border-opacity:1;border-color:rgb(31 111 235 / var(--tw-border-opacity, 1))}.border-\[\#23863630\]{border-color:#23863630}.border-\[\#238636\]{--tw-border-opacity:1;border-color:rgb(35 134 54 / var(--tw-border-opacity, 1))}.border-\[\#2f81f7\]{--tw-border-opacity:1;border-color:rgb(47 129 247 / var(--tw-border-opacity, 1))}.border-\[\#30363d\]{--tw-border-opacity:1;border-color:rgb(48 54 61 / var(--tw-border-opacity, 1))}.border-\[\#d29922\]{--tw-border-opacity:1;border-color:rgb(210 153 34 / var(--tw-border-opacity, 1))}.border-\[\#da3633\]{--tw-border-opacity:1;border-color:rgb(218 54 51 / var(--tw-border-opacity, 1))}.bg-\[\#0d1117\]{--tw-bg-opacity:1;background-color:rgb(13 17 23 / var(--tw-bg-opacity, 1))}.bg-\[\#161b22\]{--tw-bg-opacity:1;background-color:rgb(22 27 34 / var(--tw-bg-opacity, 1))}.bg-\[\#1f6feb10\]{background-color:#1f6feb10}.bg-\[\#1f6feb20\]{background-color:#1f6feb20}.bg-\[\#23863610\]{background-color:#23863610}.bg-\[\#23863620\]{background-color:#23863620}.bg-\[\#238636\]{--tw-bg-opacity:1;background-color:rgb(35 134 54 / var(--tw-bg-opacity, 1))}.bg-\[\#238636\]\/20{background-color:rgb(35 134 54 / 0.2)}.bg-\[\#2f81f7\]{--tw-bg-opacity:1;background-color:rgb(47 129 247 / var(--tw-bg-opacity, 1))}.bg-\[\#2f81f7\]\/20{background-color:rgb(47 129 247 / 0.2)}.bg-\[\#30363d\]{--tw-bg-opacity:1;background-color:rgb(48 54 61 / var(--tw-bg-opacity, 1))}.bg-\[\#d2992220\]{background-color:#d2992220}.bg-\[\#da363320\]{background-color:#da363320}.p-0{padding:0px}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-12{padding-left:3rem;padding-right:3rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.pb-4{padding-bottom:1rem}.text-center{text-align:center}.font-mono{font-family:JetBrains Mono, monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-8xl{font-size:6rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[8px\]{font-size:8px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.text-\[\#238636\]{--tw-text-opacity:1;color:rgb(35 134 54 / var(--tw-text-opacity, 1))}.text-\[\#2ea043\]{--tw-text-opacity:1;color:rgb(46 160 67 / var(--tw-text-opacity, 1))}.text-\[\#2f81f7\]{--tw-text-opacity:1;color:rgb(47 129 247 / var(--tw-text-opacity, 1))}.text-\[\#3fb950\]{--tw-text-opacity:1;color:rgb(63 185 80 / var(--tw-text-opacity, 1))}.text-\[\#58a6ff\]{--tw-text-opacity:1;color:rgb(88 166 255 / var(--tw-text-opacity, 1))}.text-\[\#8b949e\]{--tw-text-opacity:1;color:rgb(139 148 158 / var(--tw-text-opacity, 1))}.text-\[\#c9d1d9\]{--tw-text-opacity:1;color:rgb(201 209 217 / var(--tw-text-opacity, 1))}.text-\[\#d29922\]{--tw-text-opacity:1;color:rgb(210 153 34 / var(--tw-text-opacity, 1))}.text-\[\#da3633\]{--tw-text-opacity:1;color:rgb(218 54 51 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-10{opacity:0.1}.opacity-30{opacity:0.3}.opacity-50{opacity:0.5}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-\[\#23863650\]:hover{border-color:#23863650}.hover\:border-\[\#2f81f750\]:hover{border-color:#2f81f750}.group:hover .group-hover\:opacity-20{opacity:0.2}</style><style id="slide-selected-style">
+  [data-slide-selected]::before
+  /* [data-slide-hover-selected]::before */ {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    padding: 4px;
+    border-radius: 0px;
+    outline: 2px solid #0f7fff !important;
+    z-index: 10000;
+    pointer-events: none;
+  }
+
+ /* [data-slide-hover-selected], */
+  [data-slide-selected] {
+    position: relative;
+    outline: none;
+    cursor: default;
+  }
+
+  img[data-slide-selected],
+  img[data-slide-hover-selected],
+  [data-slide-hover-selected],
+  [item-slide-click-selected],
+  [item-slide-selected] {
+    border: 2px solid #0f7fff !important;
+  }
+
+
+</style></head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-[1280px] h-[720px] relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / execution-models</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#1f6feb20] border border-[#1f6feb60]">
+<div class="w-2 h-2 rounded-full bg-[#2f81f7]"></div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex px-12 py-10 gap-10">
+<!-- Left Column: Tasks Model -->
+<div class="flex-1 flex flex-col bg-[#161b22] border border-[#30363d] rounded-xl p-6 shadow-xl relative overflow-hidden group hover:border-[#2f81f750] transition-colors">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<i class="fa-solid fa-layer-group text-8xl text-[#2f81f7]"></i>
+</div>
+<h3 class="text-xl font-bold text-white mb-6 border-b border-[#30363d] pb-4 flex items-center gap-3 z-10">
+<div class="w-8 h-8 rounded bg-[#2f81f7]/20 flex items-center justify-center text-[#2f81f7] text-sm">
+<i class="fa-solid fa-server"></i>
+</div>
+                    Traditional Tasks
+                </h3>
+<div class="flex-1 flex flex-col gap-4 z-10">
+<!-- Diagram Area -->
+<div class="h-48 bg-[#0d1117] rounded-lg border border-[#30363d] p-4 flex justify-center items-center relative mb-2">
+<!-- OS Scheduler -->
+<div class="absolute top-2 left-0 right-0 text-center text-[10px] text-[#8b949e] font-mono">OS Scheduler</div>
+<!-- Task 1 -->
+<div class="absolute left-4 top-8 w-24 h-32 bg-[#1f6feb20] border border-[#1f6feb] rounded flex flex-col items-center justify-center gap-1">
+<div class="text-[#2f81f7] font-bold text-xs">Task A</div>
+<div class="w-16 h-1 bg-[#2f81f7] rounded-full opacity-50"></div>
+<div class="w-16 h-1 bg-[#2f81f7] rounded-full opacity-30"></div>
+<div class="w-16 h-16 border-t border-[#2f81f7] mt-2 rounded-full flex items-center justify-center text-[8px] text-[#2f81f7]">Stack</div>
+</div>
+<!-- Task 2 -->
+<div class="absolute left-32 top-8 w-24 h-32 bg-[#23863620] border border-[#238636] rounded flex flex-col items-center justify-center gap-1">
+<div class="text-[#2ea043] font-bold text-xs">Task B</div>
+<div class="w-16 h-1 bg-[#238636] rounded-full opacity-50"></div>
+<div class="w-16 h-1 bg-[#238636] rounded-full opacity-30"></div>
+<div class="w-16 h-16 border-t border-[#238636] mt-2 rounded-full flex items-center justify-center text-[8px] text-[#2ea043]">Stack</div>
+</div>
+<!-- Context Switch Arrows -->
+<div class="absolute left-[108px] top-16 text-[#8b949e] text-lg animate-pulse">
+<i class="fa-solid fa-arrow-right-arrow-left"></i>
+</div>
+</div>
+<!-- Characteristics -->
+<div class="space-y-3">
+<div class="flex items-start gap-3">
+<i class="fa-solid fa-check text-[#2f81f7] mt-1 text-xs"></i>
+<p class="text-sm text-[#c9d1d9]"><strong class="text-white">Independent Resources:</strong> Own stack, thread context, &amp; priority.</p>
+</div>
+<div class="flex items-start gap-3">
+<i class="fa-solid fa-check text-[#2f81f7] mt-1 text-xs"></i>
+<p class="text-sm text-[#c9d1d9]"><strong class="text-white">Blocking Allowed:</strong> Can sleep, poll, or wait for IO/events.</p>
+</div>
+<div class="flex items-start gap-3">
+<i class="fa-solid fa-triangle-exclamation text-[#d29922] mt-1 text-xs"></i>
+<p class="text-sm text-[#c9d1d9]"><strong class="text-white">High Overhead:</strong> Context switching costs &amp; high RAM usage per task.</p>
+</div>
+<div class="mt-2 p-3 bg-[#1f6feb10] border border-[#1f6feb30] rounded text-xs text-[#58a6ff]">
+<strong class="block mb-1">Use Case:</strong> Long-running computations, blocking drivers, complex logic requiring isolation.
+                    </div>
+</div>
+</div>
+</div>
+<!-- Right Column: Work Queue Model -->
+<div class="flex-1 flex flex-col bg-[#161b22] border border-[#30363d] rounded-xl p-6 shadow-xl relative overflow-hidden group hover:border-[#23863650] transition-colors">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<i class="fa-solid fa-list-check text-8xl text-[#238636]"></i>
+</div>
+<h3 class="text-xl font-bold text-white mb-6 border-b border-[#30363d] pb-4 flex items-center gap-3 z-10">
+<div class="w-8 h-8 rounded bg-[#238636]/20 flex items-center justify-center text-[#238636] text-sm">
+<i class="fa-solid fa-network-wired"></i>
+</div>
+                    Work Queue Items
+                </h3>
+<div class="flex-1 flex flex-col gap-4 z-10">
+<!-- Diagram Area -->
+<div class="h-48 bg-[#0d1117] rounded-lg border border-[#30363d] p-4 flex justify-center items-center relative mb-2">
+<!-- Single Thread -->
+<div class="absolute top-2 left-0 right-0 text-center text-[10px] text-[#2ea043] font-mono font-bold">Single Shared Thread (hp_default)</div>
+<!-- Timeline -->
+<div class="absolute top-8 left-4 right-4 h-1 bg-[#30363d] rounded"></div>
+<!-- Queue Items -->
+<div class="absolute top-6 left-8 flex gap-2">
+<!-- Item 1 -->
+<div class="flex flex-col items-center">
+<div class="w-16 h-20 bg-[#23863620] border border-[#238636] rounded flex items-center justify-center text-xs font-bold text-[#2ea043]">Item A</div>
+<div class="h-4 w-[1px] bg-[#30363d]"></div>
+<div class="text-[8px] text-[#8b949e]">t=0</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col items-center">
+<div class="w-16 h-20 bg-[#d2992220] border border-[#d29922] rounded flex items-center justify-center text-xs font-bold text-[#d29922]">Item B</div>
+<div class="h-4 w-[1px] bg-[#30363d]"></div>
+<div class="text-[8px] text-[#8b949e]">t=10ms</div>
+</div>
+<!-- Item 3 -->
+<div class="flex flex-col items-center">
+<div class="w-16 h-20 bg-[#23863620] border border-[#238636] rounded flex items-center justify-center text-xs font-bold text-[#2ea043]">Item A</div>
+<div class="h-4 w-[1px] bg-[#30363d]"></div>
+<div class="text-[8px] text-[#8b949e]">t=20ms</div>
+</div>
+<!-- Item 4 -->
+<div class="flex flex-col items-center opacity-50">
+<div class="w-16 h-20 bg-[#da363320] border border-[#da3633] rounded flex items-center justify-center text-xs font-bold text-[#da3633]">Item C</div>
+</div>
+</div>
+</div>
+<!-- Characteristics -->
+<div class="space-y-3">
+<div class="flex items-start gap-3">
+<i class="fa-solid fa-check text-[#238636] mt-1 text-xs"></i>
+<p class="text-sm text-[#c9d1d9]"><strong class="text-white">Shared Resources:</strong> Single stack/thread for multiple modules.</p>
+</div>
+<div class="flex items-start gap-3">
+<i class="fa-solid fa-check text-[#238636] mt-1 text-xs"></i>
+<p class="text-sm text-[#c9d1d9]"><strong class="text-white">Cooperative:</strong> No blocking/sleeping allowed. Must yield quickly.</p>
+</div>
+<div class="flex items-start gap-3">
+<i class="fa-solid fa-bolt text-[#238636] mt-1 text-xs"></i>
+<p class="text-sm text-[#c9d1d9]"><strong class="text-white">High Efficiency:</strong> Minimal context switching, very low RAM footprint.</p>
+</div>
+<div class="mt-2 p-3 bg-[#23863610] border border-[#23863630] rounded text-xs text-[#3fb950]">
+<strong class="block mb-1">Use Case:</strong> Periodic tasks (controllers), event-driven logic, drivers with interrupts.
+                    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="h-1 bg-[#30363d]"></div>
+</div>
+<script defer="defer" src="Runtime%20Models_%20Tasks%20vs%20Work%20Queues_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015.es" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;9cb0c4ae3f77b555&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}},&quot;version&quot;:&quot;2025.9.1&quot;,&quot;token&quot;:&quot;4edd5f8ec12a48cfa682ab8261b80a79&quot;}" crossorigin="anonymous"></script>
+
+<script src="Runtime%20Models_%20Tasks%20vs%20Work%20Queues_files/slide-inner.js"></script></body></html>

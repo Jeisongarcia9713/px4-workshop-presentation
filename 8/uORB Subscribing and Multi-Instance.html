@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>uORB Subscribing and Multi-Instance</title>
+<script src="uORB%20Subscribing%20and%20Multi-Instance_files/3.4.17"></script>
+<link href="uORB%20Subscribing%20and%20Multi-Instance_files/css2.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        github: {
+                            bg: '#0d1117',
+                            card: '#161b22',
+                            border: '#30363d',
+                            text: '#c9d1d9',
+                            heading: '#ffffff',
+                            accent: '#2f81f7',
+                            success: '#238636',
+                            warning: '#d29922',
+                            danger: '#da3633',
+                            dim: '#8b949e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.relative{position:relative}.m-0{margin:0px}.mb-1{margin-bottom:0.25rem}.mb-4{margin-bottom:1rem}.mt-4{margin-top:1rem}.flex{display:flex}.h-1{height:0.25rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-8{height:2rem}.h-\[720px\]{height:720px}.h-full{height:100%}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-8{width:2rem}.w-\[1280px\]{width:1280px}.min-w-0{min-width:0px}.flex-1{flex:1 1 0%}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-8{gap:2rem}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-\[\#1f6feb60\]{border-color:#1f6feb60}.border-\[\#238636\]\/30{border-color:rgb(35 134 54 / 0.3)}.border-\[\#238636\]\/50{border-color:rgb(35 134 54 / 0.5)}.border-\[\#2f81f7\]\/30{border-color:rgb(47 129 247 / 0.3)}.border-\[\#2f81f7\]\/50{border-color:rgb(47 129 247 / 0.5)}.border-\[\#30363d\]{--tw-border-opacity:1;border-color:rgb(48 54 61 / var(--tw-border-opacity, 1))}.bg-\[\#0d1117\]{--tw-bg-opacity:1;background-color:rgb(13 17 23 / var(--tw-bg-opacity, 1))}.bg-\[\#161b22\]{--tw-bg-opacity:1;background-color:rgb(22 27 34 / var(--tw-bg-opacity, 1))}.bg-\[\#1f6feb20\]{background-color:#1f6feb20}.bg-\[\#238636\]\/10{background-color:rgb(35 134 54 / 0.1)}.bg-\[\#238636\]\/20{background-color:rgb(35 134 54 / 0.2)}.bg-\[\#2f81f7\]{--tw-bg-opacity:1;background-color:rgb(47 129 247 / var(--tw-bg-opacity, 1))}.bg-\[\#2f81f7\]\/10{background-color:rgb(47 129 247 / 0.1)}.bg-\[\#2f81f7\]\/20{background-color:rgb(47 129 247 / 0.2)}.bg-\[\#30363d\]{--tw-bg-opacity:1;background-color:rgb(48 54 61 / var(--tw-bg-opacity, 1))}.bg-\[\#7ce38b\]{--tw-bg-opacity:1;background-color:rgb(124 227 139 / var(--tw-bg-opacity, 1))}.bg-\[\#fa7970\]{--tw-bg-opacity:1;background-color:rgb(250 121 112 / var(--tw-bg-opacity, 1))}.bg-\[\#faa356\]{--tw-bg-opacity:1;background-color:rgb(250 163 86 / var(--tw-bg-opacity, 1))}.p-0{padding:0px}.p-6{padding:1.5rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-12{padding-left:3rem;padding-right:3rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pl-4{padding-left:1rem}.pl-8{padding-left:2rem}.font-mono{font-family:JetBrains Mono, monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.text-\[\#238636\]{--tw-text-opacity:1;color:rgb(35 134 54 / var(--tw-text-opacity, 1))}.text-\[\#2ea043\]{--tw-text-opacity:1;color:rgb(46 160 67 / var(--tw-text-opacity, 1))}.text-\[\#2f81f7\]{--tw-text-opacity:1;color:rgb(47 129 247 / var(--tw-text-opacity, 1))}.text-\[\#79c0ff\]{--tw-text-opacity:1;color:rgb(121 192 255 / var(--tw-text-opacity, 1))}.text-\[\#8b949e\]{--tw-text-opacity:1;color:rgb(139 148 158 / var(--tw-text-opacity, 1))}.text-\[\#a5d6ff\]{--tw-text-opacity:1;color:rgb(165 214 255 / var(--tw-text-opacity, 1))}.text-\[\#c9d1d9\]{--tw-text-opacity:1;color:rgb(201 209 217 / var(--tw-text-opacity, 1))}.text-\[\#d29922\]{--tw-text-opacity:1;color:rgb(210 153 34 / var(--tw-text-opacity, 1))}.text-\[\#d2a8ff\]{--tw-text-opacity:1;color:rgb(210 168 255 / var(--tw-text-opacity, 1))}.text-\[\#ff7b72\]{--tw-text-opacity:1;color:rgb(255 123 114 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.opacity-90{opacity:0.9}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:opacity-100:hover{opacity:1}</style><style id="slide-selected-style">
+  [data-slide-selected]::before
+  /* [data-slide-hover-selected]::before */ {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+    padding: 4px;
+    border-radius: 0px;
+    outline: 2px solid #0f7fff !important;
+    z-index: 10000;
+    pointer-events: none;
+  }
+
+ /* [data-slide-hover-selected], */
+  [data-slide-selected] {
+    position: relative;
+    outline: none;
+    cursor: default;
+  }
+
+  img[data-slide-selected],
+  img[data-slide-hover-selected],
+  [data-slide-hover-selected],
+  [item-slide-click-selected],
+  [item-slide-selected] {
+    border: 2px solid #0f7fff !important;
+  }
+
+
+</style></head>
+<body class="bg-[#0d1117] text-[#c9d1d9] overflow-hidden m-0 p-0">
+<div class="w-[1280px] h-[720px] relative flex flex-col bg-[#0d1117] overflow-hidden">
+<!-- Top Navigation -->
+<div class="h-14 border-b border-[#30363d] flex items-center justify-between px-8 bg-[#161b22]">
+<div class="flex items-center gap-3">
+<i class="fa-brands fa-github text-2xl text-white"></i>
+<span class="font-mono text-sm text-[#8b949e] font-medium">px4-workshop / uorb / subscribing</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[#1f6feb20] border border-[#1f6feb60]">
+<div class="w-2 h-2 rounded-full bg-[#2f81f7]"></div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex px-12 py-8 gap-8 overflow-hidden">
+<!-- Left Column: C++ Subscription Wrapper -->
+<div class="flex-1 flex flex-col min-w-0">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-[#238636]/20 flex items-center justify-center text-[#238636] border border-[#238636]/50">
+<span class="font-bold text-sm">C++</span>
+</div>
+<h2 class="text-xl font-bold text-white">Subscription Wrapper</h2>
+</div>
+<span class="text-xs font-mono px-2 py-1 rounded bg-[#238636]/10 text-[#2ea043] border border-[#238636]/30">Standard</span>
+</div>
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl flex flex-col h-full shadow-xl overflow-hidden">
+<div class="flex items-center justify-between px-4 py-2 bg-[#0d1117] border-b border-[#30363d]">
+<span class="font-mono text-xs text-[#8b949e]">src/modules/subscriber_module/MySubscriber.cpp</span>
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-[#fa7970]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#faa356]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#7ce38b]"></div>
+</div>
+</div>
+<div class="p-6 font-mono text-sm leading-relaxed overflow-auto flex-1">
+<p class="text-[#8b949e] italic">// 1. Instantiate Subscription handle (usually as class member)</p>
+<p class="mb-4"><span class="text-[#d2a8ff]">uORB::Subscription</span>&lt;<span class="text-[#79c0ff]">my_topic_s</span>&gt; _my_topic_sub{<span class="text-[#79c0ff]">ORB_ID</span>(my_topic)};</p>
+<p class="text-[#8b949e] italic">// 2. Check and Copy (inside Run loop)</p>
+<p class="mb-1"><span class="text-[#ff7b72]">void</span> <span class="text-[#d2a8ff]">Run</span>() {</p>
+<p class="pl-4 mb-1"><span class="text-[#79c0ff]">my_topic_s</span> msg;</p>
+<p class="pl-4 mb-1"><span class="text-[#8b949e]">// Efficiently check for updates and copy if new</span></p>
+<p class="pl-4 mb-1"><span class="text-[#ff7b72]">if</span> (_my_topic_sub.<span class="text-[#d2a8ff]">update</span>(&amp;msg)) {</p>
+<p class="pl-8 mb-1"><span class="text-[#8b949e]">// New data available! Process it.</span></p>
+<p class="pl-8 mb-1"><span class="text-[#d2a8ff]">PX4_INFO</span>(<span class="text-[#a5d6ff]">"Value: %.2f"</span>, (<span class="text-[#ff7b72]">double</span>)msg.value);</p>
+<p class="pl-4 mb-1">}</p>
+<p>}</p>
+<p class="mt-4 text-[#8b949e] italic">// Alternative: Force copy (gets last known value)</p>
+<p class="mb-1">_my_topic_sub.<span class="text-[#d2a8ff]">copy</span>(&amp;msg);</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Multi-Instance & Event Driven -->
+<div class="flex-1 flex flex-col min-w-0">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-[#2f81f7]/20 flex items-center justify-center text-[#2f81f7] border border-[#2f81f7]/50">
+<i class="fa-solid fa-layer-group text-sm"></i>
+</div>
+<h2 class="text-xl font-bold text-white">Multi-Instance &amp; Work Queue</h2>
+</div>
+<span class="text-xs font-mono px-2 py-1 rounded bg-[#2f81f7]/10 text-[#2f81f7] border border-[#2f81f7]/30">Advanced</span>
+</div>
+<div class="bg-[#161b22] border border-[#30363d] rounded-xl flex flex-col h-full shadow-xl overflow-hidden opacity-90 hover:opacity-100 transition-opacity">
+<div class="flex items-center justify-between px-4 py-2 bg-[#0d1117] border-b border-[#30363d]">
+<span class="font-mono text-xs text-[#8b949e]">Multi-instance &amp; Event-driven patterns</span>
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-[#fa7970]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#faa356]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#7ce38b]"></div>
+</div>
+</div>
+<div class="p-6 font-mono text-sm leading-relaxed overflow-auto flex-1">
+<p class="text-[#8b949e] italic">// Multi-instance Subscription (C++ Wrapper)</p>
+<p class="mb-1"><span class="text-[#8b949e]">// Subscribe to 2nd instance (index 1)</span></p>
+<p class="mb-4"><span class="text-[#d2a8ff]">uORB::Subscription</span>&lt;<span class="text-[#79c0ff]">sensor_accel_s</span>&gt; _accel_sub{<span class="text-[#79c0ff]">ORB_ID</span>(sensor_accel), <span class="text-[#79c0ff]">1</span>};</p>
+<p class="text-[#8b949e] italic">// Multi-instance Publication (C API style for dynamic)</p>
+<p class="mb-1"><span class="text-[#ff7b72]">int</span> instance = <span class="text-[#79c0ff]">1</span>; <span class="text-[#8b949e]">// Request specific instance or let ORB assign</span></p>
+<p class="mb-4"><span class="text-[#d2a8ff]">orb_advertise_multi</span>(<span class="text-[#79c0ff]">ORB_ID</span>(sensor_accel), &amp;data, &amp;instance);</p>
+<p class="text-[#8b949e] italic">// Event-driven Callback (Work Queue)</p>
+<p class="mb-1"><span class="text-[#ff7b72]">class</span> <span class="text-[#d2a8ff]">MyModule</span> : <span class="text-[#ff7b72]">public</span> <span class="text-[#d2a8ff]">ModuleBase</span>&lt;MyModule&gt;, <span class="text-[#ff7b72]">public</span> <span class="text-[#d2a8ff]">ScheduledWorkItem</span> {</p>
+<p class="pl-4 mb-1"><span class="text-[#8b949e]">// Callback schedules Run() when topic updates</span></p>
+<p class="pl-4 mb-1"><span class="text-[#d2a8ff]">uORB::SubscriptionCallbackWorkItem</span> _sub_cb{<span class="text-[#ff7b72]">this</span>, <span class="text-[#79c0ff]">ORB_ID</span>(vehicle_status)};</p>
+<p class="mb-1">};</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Info -->
+<div class="h-12 bg-[#161b22] border-t border-[#30363d] flex items-center px-8 justify-between">
+<div class="flex items-center gap-2 text-xs text-[#8b949e]">
+<i class="fa-solid fa-bolt text-[#d29922]"></i>
+<span>Use <code class="bg-[#30363d] px-1 rounded text-[#c9d1d9]">SubscriptionCallbackWorkItem</code> to wake up your module only when data arrives (saves CPU).</span>
+</div>
+<div class="flex items-center gap-4 text-xs font-mono text-[#8b949e]">
+<span>sub.update() returns true only once per update</span>
+</div>
+</div>
+<!-- Bottom Bar -->
+<div class="h-1 bg-[#30363d]"></div>
+</div>
+<script defer="defer" src="uORB%20Subscribing%20and%20Multi-Instance_files/vcd15cbe7772f49c399c6a5babf22c1241717689176015.es" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon="{&quot;rayId&quot;:&quot;9cb0caebd8c79793&quot;,&quot;serverTiming&quot;:{&quot;name&quot;:{&quot;cfExtPri&quot;:true,&quot;cfEdge&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfL4&quot;:true,&quot;cfSpeedBrain&quot;:true,&quot;cfCacheStatus&quot;:true}},&quot;version&quot;:&quot;2025.9.1&quot;,&quot;token&quot;:&quot;4edd5f8ec12a48cfa682ab8261b80a79&quot;}" crossorigin="anonymous"></script>
+
+<script src="uORB%20Subscribing%20and%20Multi-Instance_files/slide-inner.js"></script></body></html>

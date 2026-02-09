@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PX4 Workshop Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease-in-out;
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 2;
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .slide iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #0d1117;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 1000;
+            background: rgba(22, 27, 34, 0.9);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid #30363d;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .nav-button:hover {
+            background: #30363d;
+            border-color: #484f58;
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+        }
+
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #30363d;
+            border-top: 3px solid #2f81f7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <div>Loading presentation...</div>
+    </div>
+
+
+
+    <div class="presentation-container" id="presentationContainer">
+        <!-- Slides will be loaded here -->
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" id="prevBtn" onclick="previousSlide()">
+            ← Previous
+        </button>
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">3</span>
+        </div>
+        <button class="nav-button" id="nextBtn" onclick="nextSlide()">
+            Next →
+        </button>
+    </div>
+
+    <script>
+        class PresentationController {
+            constructor() {
+                this.slides = [
+                    {
+                        title: 'PX4 Application Development Workshop',
+                        path: '0/PX4 Application Development Workshop.html'
+                    },
+                    {
+                        title: 'PX4 Architecture at a Glance',
+                        path: '1/PX4 Architecture at a Glance.html'
+                    },
+                    {
+                        title: 'RTOS: NuttX Integration & Real-Time',
+                        path: '2/RTOS_ NuttX Integration & Real-Time.html'
+                    },
+                    {
+                        title: 'Runtime Models: Tasks vs Work Queues',
+                        path: '3/Runtime Models_ Tasks vs Work Queues.html'
+                    },
+                    {
+                        title: 'uORB Middleware: What and Why',
+                        path: '4/uORB Middleware_ What and Why.html'
+                    },
+                    {
+                        title: 'uORB Message Definition Syntax',
+                        path: '5/uORB Message Definition Syntax.html'
+                    },
+                    {
+                        title: 'Step-by-Step: Create a Custom uORB Topic',
+                        path: '6/Step-by-Step_ Create a Custom uORB Topic.html'
+                    },
+                    {
+                        title: 'uORB Publishing: Minimal Example',
+                        path: '7/uORB Publishing_ Minimal Example.html'
+                    },
+                    {
+                        title: 'uORB Subscribing and Multi-Instance',
+                        path: '8/uORB Subscribing and Multi-Instance.html'
+                    },
+                    {
+                        title: 'Flight Stack Overview',
+                        path: '9/Flight Stack Overview.html'
+                    },
+                    {
+                        title: 'Middleware Components',
+                        path: '10/Middleware Components.html'
+                    },
+                    {
+                        title: 'Tasks vs Work Queue Items: Comparison',
+                        path: '11/Tasks vs Work Queue Items_ Comparison.html'
+                    },
+                    {
+                        title: 'Create a Task-Based Module',
+                        path: '12/Create a Task-Based Module.html'
+                    },
+                    {
+                        title: 'Create a Work Queue Module',
+                        path: '13/Create a Work Queue Module.html'
+                    },
+                    {
+                        title: 'Scheduling Methods for Work Queues',
+                        path: '14/Scheduling Methods for Work Queues.html'
+                    },
+                    {
+                        title: 'Best Practices: Choosing and Implementing',
+                        path: '15/Best Practices_ Choosing and Implementing.html'
+                    },
+                    {
+                        title: 'Summary & Q&A',
+                        path: '16/Summary & Q&A.html'
+                    }
+                ];
+                
+                this.currentSlideIndex = 0;
+                this.totalSlides = this.slides.length;
+                this.slideElements = [];
+                this.isLoading = true;
+                
+                this.init();
+            }
+
+            async init() {
+                this.setupKeyboardNavigation();
+                this.updateTotalSlides();
+                await this.loadSlides();
+                this.showSlide(0);
+                this.hideLoading();
+            }
+
+            async loadSlides() {
+                const container = document.getElementById('presentationContainer');
+                
+                for (let i = 0; i < this.slides.length; i++) {
+                    const slideDiv = document.createElement('div');
+                    slideDiv.className = 'slide';
+                    slideDiv.id = `slide-${i}`;
+                    
+                    const iframe = document.createElement('iframe');
+                    iframe.src = this.slides[i].path;
+                    iframe.title = this.slides[i].title;
+                    iframe.loading = 'lazy';
+                    
+                    // Handle iframe load events
+                    iframe.onload = () => {
+                        console.log(`Slide ${i + 1} loaded: ${this.slides[i].title}`);
+                    };
+                    
+                    iframe.onerror = () => {
+                        console.error(`Failed to load slide ${i + 1}: ${this.slides[i].path}`);
+                        slideDiv.innerHTML = `
+                            <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; text-align: center;">
+                                <h2 style="color: #da3633; margin-bottom: 10px;">Failed to load slide</h2>
+                                <p style="color: #8b949e;">${this.slides[i].title}</p>
+                                <p style="color: #8b949e; font-size: 12px; margin-top: 10px;">Path: ${this.slides[i].path}</p>
+                            </div>
+                        `;
+                    };
+                    
+                    slideDiv.appendChild(iframe);
+                    container.appendChild(slideDiv);
+                    this.slideElements.push(slideDiv);
+                }
+            }
+
+
+            setupKeyboardNavigation() {
+                document.addEventListener('keydown', (e) => {
+                    if (this.isLoading) return;
+                    
+                    switch(e.key) {
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                            e.preventDefault();
+                            this.previousSlide();
+                            break;
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                        case ' ':
+                            e.preventDefault();
+                            this.nextSlide();
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToSlide(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToSlide(this.totalSlides - 1);
+                            break;
+                        case 'Escape':
+                            if (document.fullscreenElement) {
+                                document.exitFullscreen();
+                            }
+                            break;
+                    }
+                });
+            }
+
+            showSlide(index) {
+                if (index < 0 || index >= this.totalSlides) return;
+                
+                // Update current slide index FIRST
+                this.currentSlideIndex = index;
+                
+                // Update slide classes
+                this.slideElements.forEach((slide, i) => {
+                    slide.classList.remove('active', 'prev');
+                    if (i === index) {
+                        slide.classList.add('active');
+                    } else if (i < index) {
+                        slide.classList.add('prev');
+                    }
+                });
+                
+                // Update navigation UI
+                this.updateNavigation();
+                this.updateSlideCounter();
+            }
+
+            nextSlide() {
+                if (this.currentSlideIndex < this.totalSlides - 1) {
+                    this.showSlide(this.currentSlideIndex + 1);
+                }
+            }
+
+            previousSlide() {
+                if (this.currentSlideIndex > 0) {
+                    this.showSlide(this.currentSlideIndex - 1);
+                }
+            }
+
+            goToSlide(index) {
+                this.showSlide(index);
+            }
+
+            updateNavigation() {
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                
+                prevBtn.disabled = this.currentSlideIndex === 0;
+                nextBtn.disabled = this.currentSlideIndex === this.totalSlides - 1;
+            }
+
+
+            updateSlideCounter() {
+                document.getElementById('currentSlide').textContent = this.currentSlideIndex + 1;
+            }
+
+            updateTotalSlides() {
+                document.getElementById('totalSlides').textContent = this.totalSlides;
+            }
+
+            hideLoading() {
+                this.isLoading = false;
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Global functions for button clicks
+        let presentation;
+
+        function nextSlide() {
+            if (presentation) presentation.nextSlide();
+        }
+
+        function previousSlide() {
+            if (presentation) presentation.previousSlide();
+        }
+
+        // Initialize presentation when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            presentation = new PresentationController();
+        });
+
+        // Handle fullscreen toggle
+        document.addEventListener('dblclick', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
